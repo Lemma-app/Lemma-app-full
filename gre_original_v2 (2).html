@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GRE Math">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#FBF0DC">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>GRE Math Trainer — Full Edition</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --gold:#A86810;--gl:#FBF0DC;--gm:#D4891C;--gd:#5C3A05;--gb:#F5C46A;
+  --grey:#EEECEA;--gb2:#C5C3BA;--gt:#3E3D3A;
+  --bg:#F5F3EE;--sf:#FFFFFF;--tx:#181816;
+  --ok:#1e6b05;--okb:#E6F3D6;--no:#a32020;--nob:#FCEBEB;
+  --r:12px;--rl:16px;--rxl:20px;
+}
+html{height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--tx);min-height:100%;font-size:16px;line-height:1.5;padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+.wrap{max-width:680px;margin:0 auto;padding:18px 14px 60px}
+
+.hdr{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--gb2)}
+.hdr-icon{width:48px;height:48px;min-width:48px;border-radius:var(--r);background:var(--gl);display:flex;align-items:center;justify-content:center;border:2px solid var(--gm);font-size:22px}
+.hdr-t{font-size:20px;font-weight:800;color:var(--tx)}
+.hdr-s{font-size:12px;color:var(--gt);margin-top:2px;font-weight:500}
+
+/* MAIN TABS */
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--gb2);border-radius:var(--rl);overflow:hidden;background:var(--sf);margin-bottom:18px}
+.tab{padding:9px 2px;font-size:9.5px;font-weight:800;border:none;background:transparent;color:var(--gt);cursor:pointer;border-right:2px solid var(--gb2);text-transform:none;letter-spacing:0;line-height:1.15;touch-action:manipulation;white-space:nowrap;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;overflow:hidden;text-overflow:ellipsis}
+.tab:last-child{border-right:none}
+.tab.active{background:var(--gl);color:var(--gd)}
+.tab:active{opacity:0.65}
+.tab svg{width:16px;height:16px;stroke:currentColor;stroke-width:2.2;fill:none}
+.panel{display:none}.panel.active{display:block}
+
+/* CARDS */
+.card{background:var(--sf);border:2px solid var(--gb2);border-radius:var(--rxl);padding:22px 18px;margin-bottom:14px}
+.card-sm{background:var(--sf);border:2px solid var(--gb2);border-radius:var(--rl);padding:14px;margin-bottom:12px}
+
+/* LABELS / TIPS */
+.slabel{font-size:11px;font-weight:800;color:var(--gt);margin-bottom:9px;letter-spacing:0.08em;text-transform:uppercase}
+.tip{background:var(--gl);border-left:4px solid var(--gm);border-radius:0 var(--r) var(--r) 0;padding:12px 14px;font-size:14px;color:var(--gd);margin-bottom:14px;line-height:1.6;font-weight:600}
+.tip strong{font-weight:800}
+.rule-box{background:var(--grey);border:2px solid var(--gb2);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.rule-title{font-size:13px;font-weight:800;color:var(--gd);margin-bottom:6px}
+.rule-body{font-size:14px;font-weight:600;color:var(--tx);line-height:1.7}
+.rule-body strong{color:var(--gd);font-weight:800}
+.rule-body em{color:var(--gt);font-style:normal;font-size:13px}
+
+/* TABLE PICKERS */
+.picker-box{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:var(--grey);border-radius:var(--rl);margin-bottom:12px;border:2px solid var(--gb2)}
+.quick-row{display:flex;gap:6px;flex-wrap:wrap;width:100%;margin-bottom:8px}
+.qbtn{font-size:13px;font-weight:700;padding:7px 13px;border:2px solid var(--gb2);border-radius:20px;background:var(--sf);color:var(--gt);cursor:pointer;min-height:38px;touch-action:manipulation}
+.qbtn:active{opacity:0.65}
+.nbtn{padding:8px 11px;font-size:14px;font-weight:700;border:2px solid var(--gb2);border-radius:var(--r);background:var(--sf);color:var(--gt);cursor:pointer;min-height:42px;min-width:50px;touch-action:manipulation}
+.nbtn.sel{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+.nbtn:active{opacity:0.65}
+
+/* TIMES GRID */
+.tg-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:14px;border-radius:var(--r);border:2px solid var(--gb2)}
+.tg-table{border-collapse:collapse;font-size:12px;font-weight:600}
+.tg-table th,.tg-table td{padding:7px 6px;text-align:center;border:1px solid var(--gb2);min-width:38px}
+.tg-table th{background:var(--grey);color:var(--gt);font-weight:800;font-size:11px}
+.tg-val{cursor:pointer;color:var(--tx);background:var(--sf)}
+.tg-val.hi-row{background:#FBF0DC;color:#5C3A05;font-weight:800}
+.tg-val.hi-col{background:#EEECEA;color:#2a2a28;font-weight:800}
+.tg-val.hi-both{background:var(--gm);color:#2a1200;font-weight:800}
+.tg-corner{background:var(--gl);color:var(--gd);font-weight:800}
+.tg-row-h{background:var(--grey);color:var(--gt);font-weight:800}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--grey);border-radius:var(--r);padding:12px 6px;text-align:center;border:2px solid var(--gb2)}
+.sn{font-size:24px;font-weight:800;color:var(--tx)}
+.sl{font-size:10px;color:var(--gt);margin-top:2px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+
+/* PBAR */
+.pbar{height:5px;background:var(--grey);border-radius:4px;margin-bottom:14px;overflow:hidden;border:1px solid var(--gb2)}
+.pfill{height:100%;background:var(--gm);border-radius:4px;transition:width 0.3s}
+
+/* DRILL CARD */
+.dcard{background:var(--sf);border:2px solid var(--gb2);border-radius:var(--rxl);padding:24px 18px;text-align:center;margin-bottom:14px}
+.qdisplay{font-size:32px;font-weight:800;color:var(--tx);margin-bottom:12px;letter-spacing:-0.5px;line-height:1.2}
+.qctx{font-size:13px;color:var(--gt);margin-bottom:7px;font-weight:600}
+.qtype-tag{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;margin-bottom:9px;text-transform:uppercase;letter-spacing:0.05em}
+.qt-mult{background:#E8F4FD;color:#1a5c8a}
+.qt-div{background:#EDF7E6;color:#1e6b05}
+.qt-pct{background:var(--gl);color:var(--gd)}
+.qt-num{background:#F0ECFD;color:#3a2a8a}
+.qt-geo{background:#FEF3E2;color:#8a4a05}
+.qt-word{background:#FDE8F0;color:#8a1a4a}
+.qt-sata{background:#E8FDF4;color:#0a5c3a}
+
+/* ANSWER */
+.ans-row{display:flex;gap:9px;justify-content:center;align-items:center;margin-bottom:10px}
+.ans-inp{width:120px;padding:11px;font-size:24px;font-weight:700;text-align:center;border:2px solid var(--gb2);border-radius:var(--r);background:var(--sf);color:var(--tx);font-family:inherit;min-height:52px}
+.ans-inp:focus{outline:none;border-color:var(--gm);box-shadow:0 0 0 3px rgba(212,137,28,0.15)}
+.fbk{min-height:26px;font-size:15px;font-weight:700;margin-bottom:7px}
+.fbk.ok{color:var(--ok)}
+.fbk.no{color:var(--no)}
+.explain-box{background:var(--grey);border-radius:var(--r);padding:11px 13px;font-size:13px;color:var(--gt);font-weight:600;line-height:1.6;margin-bottom:9px;text-align:left;border-left:4px solid var(--gm);display:none}
+.explain-box.show{display:block}
+
+/* BUTTONS */
+.chk-btn{padding:12px 22px;font-size:16px;font-weight:800;border:2px solid var(--gm);border-radius:var(--r);background:var(--gl);color:var(--gd);cursor:pointer;min-height:50px;touch-action:manipulation}
+.chk-btn:active{background:var(--gb);transform:scale(0.96)}
+.start-btn{padding:14px 36px;font-size:16px;font-weight:800;border:2px solid var(--gm);border-radius:var(--r);background:var(--gl);color:var(--gd);cursor:pointer;display:block;margin:0 auto;min-height:52px;touch-action:manipulation}
+.start-btn:active{background:var(--gb);transform:scale(0.96)}
+.nxt-btn{padding:10px 20px;font-size:14px;font-weight:700;border:2px solid var(--gb2);border-radius:var(--r);background:var(--sf);color:var(--gt);cursor:pointer;margin-top:8px;display:none;min-height:44px;touch-action:manipulation}
+.nxt-btn:active{opacity:0.65}
+
+/* PILLS */
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.pill{padding:8px 14px;font-size:13px;font-weight:700;border:2px solid var(--gb2);border-radius:20px;background:var(--sf);color:var(--gt);cursor:pointer;min-height:40px;touch-action:manipulation}
+.pill.sel{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+.pill:active{opacity:0.65}
+
+/* CHOICES */
+.choices{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.choice{padding:11px 14px;font-size:14px;font-weight:700;border:2px solid var(--gb2);border-radius:var(--r);background:var(--sf);color:var(--tx);cursor:pointer;min-height:48px;touch-action:manipulation;text-align:left}
+.choice:active:not(:disabled){background:var(--gl)}
+.choice.right{background:var(--okb);color:var(--ok);border-color:#5aaa20;font-weight:800}
+.choice.wrong{background:var(--nob);color:var(--no);border-color:#e08080;font-weight:800}
+.choice.selected{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+
+/* SATA */
+.sata-box{text-align:left;margin-top:10px}
+.sata-item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;margin-bottom:8px;border:2px solid var(--gb2);border-radius:var(--r);background:var(--sf);cursor:pointer;touch-action:manipulation}
+.sata-item.selected{background:var(--gl);border-color:var(--gm)}
+.sata-item.right{background:var(--okb);border-color:#5aaa20}
+.sata-item.wrong{background:var(--nob);border-color:#e08080}
+.sata-item.missed{background:#fff8e1;border-color:#f0b429}
+.sata-cb{width:20px;height:20px;min-width:20px;border:2px solid var(--gb2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:1px}
+.sata-text{font-size:14px;font-weight:600;color:var(--tx);line-height:1.5}
+.sata-submit{margin-top:10px;padding:11px 22px;font-size:14px;font-weight:800;border:2px solid var(--gm);border-radius:var(--r);background:var(--gl);color:var(--gd);cursor:pointer;min-height:46px;touch-action:manipulation}
+.sata-submit:active{background:var(--gb)}
+
+/* REFERENCE TABLES */
+.ref-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px}
+.ref-table th{text-align:left;padding:8px 10px;background:var(--grey);color:var(--gt);font-weight:800;border-bottom:2px solid var(--gb2);font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+.ref-table td{padding:8px 10px;border-bottom:1.5px solid var(--grey);color:var(--tx);font-weight:600}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table .gc{color:var(--gd);font-weight:800}
+.ref-table .tip-td{color:var(--gt);font-size:12px}
+
+/* SQUARES GRID */
+.sq-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
+.sq-cell{background:var(--sf);border:2px solid var(--gb2);border-radius:var(--r);padding:9px 4px;text-align:center}
+.sq-n{font-size:11px;font-weight:700;color:var(--gt)}
+.sq-v{font-size:14px;font-weight:800;color:var(--gd)}
+
+/* SVG TRIANGLES */
+.tri-wrap{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.tri-card{background:var(--sf);border:2px solid var(--gb2);border-radius:var(--rl);padding:14px;text-align:center;flex:1;min-width:140px}
+.tri-label{font-size:12px;font-weight:700;color:var(--gt);margin-top:8px}
+.tri-ratio{font-size:13px;font-weight:800;color:var(--gd);margin-top:4px}
+
+.divider{height:2px;background:var(--gb2);margin:18px 0;border-radius:1px}
+
+/* SUB-TABS */
+.stabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.stab{padding:7px 13px;font-size:12px;font-weight:700;border:2px solid var(--gb2);border-radius:20px;background:var(--sf);color:var(--gt);cursor:pointer;touch-action:manipulation}
+.stab.sel{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+.stab:active{opacity:0.65}
+.spanel{display:none}.spanel.active{display:block}
+
+.count-picker{margin-bottom:14px}
+.count-quick{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.count-btn{padding:9px 15px;font-size:14px;font-weight:800;border:2px solid var(--gb2);border-radius:20px;background:var(--sf);color:var(--gt);cursor:pointer;min-height:40px;touch-action:manipulation}
+.count-btn.sel{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+.count-custom{display:flex;align-items:center;gap:8px}
+.count-custom input{width:70px;padding:9px;font-size:15px;font-weight:700;text-align:center;border:2px solid var(--gb2);border-radius:var(--r);background:var(--sf);color:var(--tx);font-family:inherit}
+.count-custom label{font-size:12px;color:var(--gt);font-weight:600}
+.summary-card{background:var(--sf);border:2px solid var(--gm);border-radius:var(--rxl);padding:24px 18px;text-align:center;margin-bottom:14px}
+.summary-title{font-size:13px;font-weight:800;color:var(--gd);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px}
+.summary-big{font-size:34px;font-weight:800;color:var(--tx);margin-bottom:4px}
+.summary-sub{font-size:13px;color:var(--gt);font-weight:600;margin-bottom:16px}
+.fact-banner{background:var(--gl);border-left:4px solid var(--gm);border-radius:0 var(--r) var(--r) 0;padding:11px 14px;font-size:13px;color:var(--gd);margin-bottom:14px;line-height:1.55;font-weight:600;display:flex;gap:9px;align-items:flex-start}
+.fact-banner svg{width:16px;height:16px;stroke:var(--gm);stroke-width:2.2;fill:none;flex-shrink:0;margin-top:1px}
+.install-bar{display:none;align-items:center;justify-content:space-between;gap:10px;background:var(--gd);color:var(--gl);border-radius:var(--r);padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:700}
+.install-bar button{padding:7px 14px;font-size:12px;font-weight:800;border:none;border-radius:20px;background:var(--gm);color:#fff;cursor:pointer}
+
+@media(max-width:480px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sq-grid{grid-template-columns:repeat(4,1fr)}
+  .qdisplay{font-size:26px}
+  .sn{font-size:20px}
+  .wrap{padding:12px 10px 60px}
+  .tri-wrap{gap:8px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-icon"><svg viewBox="0 0 100 100" width="28" height="28"><circle cx="50" cy="50" r="46" fill="var(--gl)" stroke="var(--gm)" stroke-width="4"/><g transform="translate(16.4 72) scale(0.0913 -0.0913)" fill="var(--gd)"><path d="M48 361 64 353 72 360C82 420 123 423 183 423C195 423 214 422 236 422C197 194 171 125 113 -2L125 -11L196 15C217 93 250 245 271 421L467 414C462 352 440 171 454 107C476 2 519 -11 551 -11C605 -11 632 2 688 55L675 74L653 57C655 59 630 36 612 36C563 36 542 65 529 127C524 152 520 179 520 208L522 414C546 414 570 415 593 418C612 418 633 428 648 434C656 455 660 457 675 481L665 493C638 484 593 474 559 474C546 473 520 472 494 472L161 481C82 481 60 448 48 361Z"/></g></svg></div>
+  <div>
+    <div class="hdr-t">GRE Math Trainer <span style="font-size:12px;background:var(--gl);color:var(--gd);padding:2px 8px;border-radius:20px;border:1px solid var(--gm);font-weight:700;vertical-align:middle">Full Edition</span></div>
+    <div class="hdr-s">Tables · Number Properties · Geometry · GRE Drills · Current Format</div>
+  </div>
+</div>
+
+<div class="install-bar" id="installBar">
+  <span>Install this app for offline access</span>
+  <button onclick="doInstall()">Install</button>
+</div>
+
+<!-- MAIN TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showTab('table')">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Table
+  </button>
+  <button class="tab" onclick="showTab('drill')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Drill
+  </button>
+  <button class="tab" onclick="showTab('numref')">
+    <svg viewBox="0 0 24 24"><line x1="9" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="15" y2="21"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="3" y1="15" x2="19" y2="15"/></svg>Numbers
+  </button>
+  <button class="tab" onclick="showTab('geometry')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><line x1="12" y1="6.6" x2="7" y2="20"/><line x1="12" y1="6.6" x2="17" y2="20"/><path d="M8.3 16.5 a5 5 0 0 0 7.4 0"/></svg>Geometry
+  </button>
+  <button class="tab" onclick="showTab('gre')">
+    <svg viewBox="0 0 24 24"><path d="M12 3 L22 8 L12 13 L2 8 Z"/><path d="M6 10.5 V16 C6 18 9 19.5 12 19.5 C15 19.5 18 18 18 16 V10.5"/></svg>GRE
+  </button>
+  <button class="tab" onclick="showTab('shortcuts')">
+    <svg viewBox="0 0 24 24"><path d="M9 18 h6 M10 21 h4 M12 3 a6 6 0 0 0-3.5 10.9 C9.2 14.7 9.5 15.8 9.5 17 h5 c0-1.2 .3-2.3 1-3.1 A6 6 0 0 0 12 3 Z"/></svg>Tips
+  </button>
+</div>
+
+<!-- ===================== TABLE TAB ===================== -->
+<div id="tab-table" class="panel active">
+  <div class="fact-banner" id="factTable"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12" y2="8"/></svg><span></span></div>
+  <div class="slabel">Choose tables to display (1–20)</div>
+  <div class="picker-box" id="tablePickers">
+    <div class="quick-row">
+      <button class="qbtn" onclick="tSelectAll()">All</button>
+      <button class="qbtn" onclick="tSelectNone()">None</button>
+      <button class="qbtn" onclick="tSelectRange(2,9)">2–9</button>
+      <button class="qbtn" onclick="tSelectRange(10,12)">10–12</button>
+      <button class="qbtn" onclick="tSelectRange(13,20)">13–20</button>
+    </div>
+  </div>
+  <div class="tip">Tap any cell to highlight. The <strong>gold cell</strong> is the product. For 13–20: use <strong>split method</strong> — 17×8 = (10×8)+(7×8) = 80+56 = 136.</div>
+  <div class="tg-wrap"><table class="tg-table" id="timesGrid"></table></div>
+</div>
+
+<!-- ===================== DRILL TAB ===================== -->
+<div id="tab-drill" class="panel">
+  <div class="fact-banner" id="factDrill"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12" y2="8"/></svg><span></span></div>
+  <div class="slabel">Mode</div>
+  <div class="pills" id="drillModes">
+    <button class="pill sel" onclick="setMode('mult','drillModes')">Multiply</button>
+    <button class="pill" onclick="setMode('div','drillModes')">Divide</button>
+    <button class="pill" onclick="setMode('mix','drillModes')">Mixed</button>
+    <button class="pill" onclick="setMode('pct','drillModes')">%</button>
+    <button class="pill" onclick="setMode('numprops','drillModes')">Number Props</button>
+  </div>
+  <div class="slabel">Tables to practise</div>
+  <div class="picker-box" id="drillPickers" style="margin-bottom:14px"></div>
+  <div class="count-picker" id="drillCountPicker">
+    <div class="slabel">Session length</div>
+    <div class="count-quick" id="drillCountQuick">
+      <button class="count-btn" data-n="5" onclick="setCount('drill',5)">5</button>
+      <button class="count-btn sel" data-n="10" onclick="setCount('drill',10)">10</button>
+      <button class="count-btn" data-n="15" onclick="setCount('drill',15)">15</button>
+      <button class="count-btn" data-n="20" onclick="setCount('drill',20)">20</button>
+      <button class="count-btn" data-n="30" onclick="setCount('drill',30)">30</button>
+      <button class="count-btn" data-n="50" onclick="setCount('drill',50)">50</button>
+    </div>
+    <div class="count-custom"><label>Custom (5–50):</label><input type="number" id="drillCountCustom" min="5" max="50" placeholder="e.g. 25" onchange="setCustomCount('drill',this.value)"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="sn" id="dScore">0</div><div class="sl">Score</div></div>
+    <div class="stat"><div class="sn" id="dStreak">0</div><div class="sl">Streak</div></div>
+    <div class="stat"><div class="sn" id="dTotal">0</div><div class="sl">Done</div></div>
+    <div class="stat"><div class="sn" id="dPct">—</div><div class="sl">Acc%</div></div>
+  </div>
+  <div class="pbar"><div class="pfill" id="dProgress" style="width:0%"></div></div>
+  <div class="dcard" id="drillCard">
+    <div id="dQTag"></div>
+    <div class="qctx" id="dCtx"></div>
+    <div class="qdisplay" id="dQ">Press Start</div>
+    <div class="fbk" id="dFb"></div>
+    <div class="explain-box" id="dExplain"></div>
+    <div id="dChoicesArea"></div>
+    <div class="ans-row" id="dInputArea" style="display:none">
+      <input class="ans-inp" type="number" inputmode="numeric" id="dInp" placeholder="?" onkeydown="if(event.key==='Enter')checkDrill()" disabled>
+      <button class="chk-btn" onclick="checkDrill()">Check</button>
+    </div>
+    <button class="nxt-btn" id="dNext" onclick="nextDrill()">Next →</button>
+  </div>
+  <div class="summary-card" id="drillSummary" style="display:none">
+    <div class="summary-title">Session complete</div>
+    <div class="summary-big" id="drillSumScore">0/0</div>
+    <div class="summary-sub" id="drillSumDetail">0% accuracy · best streak 0</div>
+    <button class="start-btn" onclick="restartDrill()">New Session</button>
+  </div>
+  <button class="start-btn" id="drillStartBtn" onclick="startDrill()"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;stroke-width:2.4;fill:none;vertical-align:-3px;margin-right:6px"><path d="M3 12 L7 16 L11 4 L21 4"/></svg>Start Drill</button>
+</div>
+
+<!-- ===================== NUMBERS TAB ===================== -->
+<div id="tab-numref" class="panel">
+  <div class="fact-banner" id="factNumref"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12" y2="8"/></svg><span></span></div>
+  <div class="stabs" id="numSubTabs">
+    <button class="stab sel" onclick="showSub('num','squares')">Squares</button>
+    <button class="stab" onclick="showSub('num','cubes')">Cubes</button>
+    <button class="stab" onclick="showSub('num','roots')">√ Roots</button>
+    <button class="stab" onclick="showSub('num','powers10')">Powers 10</button>
+    <button class="stab" onclick="showSub('num','divisib')">Divisibility</button>
+    <button class="stab" onclick="showSub('num','pct')">%·Fractions</button>
+    <button class="stab" onclick="showSub('num','unitdigit')">Unit Digits</button>
+    <button class="stab" onclick="showSub('num','integers')">Integers</button>
+    <button class="stab" onclick="showSub('num','decimals')">Decimals</button>
+    <button class="stab" onclick="showSub('num','zeroes')">Zeroes</button>
+    <button class="stab" onclick="showSub('num','factorial')">Factorials</button>
+    <button class="stab" onclick="showSub('num','realnums')">Real 0–1</button>
+  </div>
+
+  <!-- SQUARES -->
+  <div id="num-squares" class="spanel active">
+    <div class="tip"><strong>Perfect Squares 1–50:</strong> Memorise these. GRE uses them in estimation, roots, and geometry.</div>
+    <div class="sq-grid" id="squaresGrid"></div>
+    <div class="divider"></div>
+    <div class="tip"><strong>Perfect Cubes 1–30:</strong> Used in volume, exponent, and root questions.</div>
+    <div class="sq-grid" id="cubesGrid"></div>
+  </div>
+
+  <!-- ROOTS -->
+  <div id="num-roots" class="spanel">
+    <div class="tip"><strong>Square roots to memorise</strong> — the GRE tests estimation of roots frequently. Know these to 2 decimal places.</div>
+    <table class="ref-table">
+      <thead><tr><th>n</th><th>√n</th><th>Memory tip</th></tr></thead>
+      <tbody id="rootsBody"></tbody>
+    </table>
+    <div class="tip" style="margin-top:6px"><strong>Between integers:</strong> √50 is between √49=7 and √64=8, closer to 7. This estimation skill is tested directly.</div>
+  </div>
+
+  <!-- CUBES -->
+  <div id="num-cubes" class="spanel">
+    <div class="tip"><strong>Perfect Cubes 1–30</strong> — know cube roots of these instantly.</div>
+    <table class="ref-table">
+      <thead><tr><th>n</th><th>n³</th><th>∛(n³)</th></tr></thead>
+      <tbody id="cubesBody"></tbody>
+    </table>
+  </div>
+
+  <!-- POWERS 10 -->
+  <div id="num-powers10" class="spanel">
+    <div class="tip"><strong>Positive powers of 10:</strong> Each multiply by 10 (shift decimal right).<br><strong>Negative powers of 10:</strong> Each divide by 10 (shift decimal left).</div>
+    <table class="ref-table">
+      <thead><tr><th>Power</th><th>Value</th><th>Decimal form</th><th>Name</th></tr></thead>
+      <tbody id="powers10Body"></tbody>
+    </table>
+  </div>
+
+  <!-- DIVISIBILITY -->
+  <div id="num-divisib" class="spanel">
+    <div class="tip"><strong>Divisibility rules 2–11</strong> — essential for the GRE. Learn these cold.</div>
+    <div id="divisibCards"></div>
+  </div>
+
+  <!-- PERCENT / FRACTIONS -->
+  <div id="num-pct" class="spanel">
+    <div class="tip"><strong>Fraction · Decimal · Percent</strong> — the GRE constantly moves between these three forms. Know all conversions instantly.</div>
+    <table class="ref-table">
+      <thead><tr><th>Fraction</th><th>Decimal</th><th>%</th><th>GRE tip</th></tr></thead>
+      <tbody id="pctBody"></tbody>
+    </table>
+    <div class="divider"></div>
+    <div class="slabel">Ratio Simplification Rules</div>
+    <div id="ratioCards"></div>
+  </div>
+
+  <!-- UNIT DIGITS -->
+  <div id="num-unitdigit" class="spanel">
+    <div class="tip"><strong>Unit digit of a power</strong> depends only on the unit digit of the base and cycles in a pattern of 4. The GRE asks this frequently: "What is the units digit of 7⁴³?"</div>
+    <div id="unitDigitCards"></div>
+    <div class="tip" style="margin-top:10px"><strong>Method:</strong> Divide exponent by 4. Use remainder to find position in cycle. Remainder 0 → use cycle position 4.</div>
+  </div>
+
+  <!-- INTEGERS -->
+  <div id="num-integers" class="spanel">
+    <div class="tip"><strong>Even/Odd and Consecutive Integer rules</strong> — tested constantly on the GRE in both QC and problem-solving questions.</div>
+    <div id="integerCards"></div>
+  </div>
+
+  <!-- DECIMALS -->
+  <div id="num-decimals" class="spanel">
+    <div class="tip"><strong>Terminating vs Non-Terminating Decimals</strong> — a fraction terminates if and only if its denominator (in lowest terms) has <strong>no prime factors other than 2 and 5</strong>.</div>
+    <div id="decimalCards"></div>
+    <table class="ref-table" style="margin-top:12px">
+      <thead><tr><th>Fraction</th><th>Denominator factors</th><th>Terminates?</th><th>Decimal</th></tr></thead>
+      <tbody id="decimalBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ZEROES -->
+  <div id="num-zeroes" class="spanel">
+    <div class="tip"><strong>Trailing zeroes</strong> come from factors of 10 = 2×5. Count pairs of (2,5) in the prime factorisation. The 5s are almost always limiting.<br><br><strong>Leading zeroes</strong> in a decimal like 0.00347 — the number of leading zeroes after the decimal point equals the negative power of 10.</div>
+    <div id="zeroCards"></div>
+  </div>
+
+  <!-- FACTORIALS -->
+  <div id="num-factorial" class="spanel">
+    <div class="tip"><strong>Legendre's Formula:</strong> The number of times prime <em>p</em> divides <em>n!</em> is:<br><strong>⌊n/p⌋ + ⌊n/p²⌋ + ⌊n/p³⌋ + …</strong> (stop when p^k > n)</div>
+    <div id="factCards"></div>
+  </div>
+
+  <!-- REAL NUMBERS 0-1 -->
+  <div id="num-realnums" class="spanel">
+    <div class="tip"><strong>Numbers between 0 and 1</strong> behave counter-intuitively — the GRE exploits this constantly in quantitative comparison questions.</div>
+    <div id="realNumCards"></div>
+  </div>
+</div>
+
+<!-- ===================== GEOMETRY TAB ===================== -->
+<div id="tab-geometry" class="panel">
+  <div class="fact-banner" id="factGeometry"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12" y2="8"/></svg><span></span></div>
+  <div class="stabs" id="geoSubTabs">
+    <button class="stab sel" onclick="showSub('geo','pythagorean')">Pythagorean</button>
+    <button class="stab" onclick="showSub('geo','simtri')">Similar △</button>
+  </div>
+
+  <!-- PYTHAGOREAN -->
+  <div id="geo-pythagorean" class="spanel active">
+    <div class="tip"><strong>Pythagorean triplets:</strong> Integer right-triangle side combinations. Memorise the first 4 unique sets and their multiples — they appear in almost every GRE geometry question.</div>
+    <div class="tri-wrap" id="pythTriWrap"></div>
+    <div class="divider"></div>
+    <div class="slabel">Key multiples to know</div>
+    <div id="pythMultiples"></div>
+  </div>
+
+  <!-- SIMILAR TRIANGLES -->
+  <div id="geo-simtri" class="spanel">
+    <div class="tip"><strong>Similar triangles</strong> have equal corresponding angles and proportional sides. Three similarity conditions: <strong>AA</strong> (two equal angles), <strong>SAS</strong> (two sides proportional + included angle equal), <strong>SSS</strong> (all three sides proportional).</div>
+    <div id="simTriContent"></div>
+  </div>
+</div>
+
+<!-- ===================== GRE DRILLS TAB ===================== -->
+<div id="tab-gre" class="panel">
+  <div class="fact-banner" id="factGre"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12" y2="8"/></svg><span></span></div>
+  <div class="slabel">Question format</div>
+  <div class="pills" id="greModes">
+    <button class="pill sel" onclick="setMode('all','greModes')">All formats</button>
+    <button class="pill" onclick="setMode('qcomp','greModes')">QC</button>
+    <button class="pill" onclick="setMode('mc','greModes')">5-choice</button>
+    <button class="pill" onclick="setMode('sata','greModes')">Select All</button>
+    <button class="pill" onclick="setMode('numeric','greModes')">Numeric Entry</button>
+  </div>
+  <div class="count-picker" id="greCountPicker">
+    <div class="slabel">Session length</div>
+    <div class="count-quick" id="greCountQuick">
+      <button class="count-btn" data-n="5" onclick="setCount('gre',5)">5</button>
+      <button class="count-btn sel" data-n="10" onclick="setCount('gre',10)">10</button>
+      <button class="count-btn" data-n="15" onclick="setCount('gre',15)">15</button>
+      <button class="count-btn" data-n="20" onclick="setCount('gre',20)">20</button>
+      <button class="count-btn" data-n="30" onclick="setCount('gre',30)">30</button>
+      <button class="count-btn" data-n="50" onclick="setCount('gre',50)">50</button>
+    </div>
+    <div class="count-custom"><label>Custom (5–50):</label><input type="number" id="greCountCustom" min="5" max="50" placeholder="e.g. 25" onchange="setCustomCount('gre',this.value)"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="sn" id="gScore">0</div><div class="sl">Score</div></div>
+    <div class="stat"><div class="sn" id="gTotal">0</div><div class="sl">Done</div></div>
+    <div class="stat"><div class="sn" id="gPct">—</div><div class="sl">Acc%</div></div>
+    <div class="stat"><div class="sn" id="gLeft">—</div><div class="sl">Left</div></div>
+  </div>
+  <div class="pbar"><div class="pfill" id="gProgress" style="width:0%"></div></div>
+  <div class="dcard" id="greCard">
+    <div id="gFmtTag"></div>
+    <div class="qctx" id="gCtx"></div>
+    <div class="qdisplay" style="font-size:18px;line-height:1.6;font-weight:700;text-align:left" id="gQ">Press Start</div>
+    <div class="fbk" id="gFb"></div>
+    <div class="explain-box" id="gExplain"></div>
+    <div id="gAnswerArea"></div>
+    <button class="nxt-btn" id="gNext" onclick="nextGRE()">Next →</button>
+  </div>
+  <div class="summary-card" id="greSummary" style="display:none">
+    <div class="summary-title">Session complete</div>
+    <div class="summary-big" id="greSumScore">0/0</div>
+    <div class="summary-sub" id="greSumDetail">0% accuracy</div>
+    <button class="start-btn" onclick="restartGRE()">New Session</button>
+  </div>
+  <button class="start-btn" id="greStartBtn" onclick="startGRE()">Start</button>
+</div>
+
+<!-- ===================== SHORTCUTS TAB ===================== -->
+<div id="tab-shortcuts" class="panel">
+  <div class="fact-banner" id="factShortcuts"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12" y2="8"/></svg><span></span></div>
+  <div class="stabs" id="shortSubTabs">
+    <button class="stab sel" onclick="showSub('short','mental')">Mental Math</button>
+    <button class="stab" onclick="showSub('short','pct2')">% Tricks</button>
+    <button class="stab" onclick="showSub('short','13to20')">13–20 Patterns</button>
+  </div>
+  <div id="short-mental" class="spanel active">
+    <div id="mentalCards"></div>
+  </div>
+  <div id="short-pct2" class="spanel">
+    <div id="pctTrickCards"></div>
+  </div>
+  <div id="short-13to20" class="spanel">
+    <div id="cards1320"></div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+<script>
+// =============================================
+// HELPERS
+// =============================================
+var tNums=[];for(var _i=1;_i<=20;_i++)tNums.push(_i);
+var tActive=[2,3,4,5,6,7,8,9,10,11,12];
+var dActive=[2,3,4,5,6,7,8,9,10,11,12];
+var drillMode='mult',greMode='all';
+var dSc=0,dSt=0,dTo=0,dOn=false;
+var gSc=0,gTo=0,gQueue=[],curQ=null,curAns=null;
+
+// =============================================
+// PERSISTENCE — gre_orig_v1 (never rename)
+// =============================================
+var OST={drill:{history:[],totalOk:0,totalQ:0,bestStreak:0},gre:{history:[],totalOk:0,totalQ:0},factRotation:null};
+function loadOST(){
+  try{var s=localStorage.getItem('gre_orig_v1');if(s)OST=JSON.parse(s);}catch(e){}
+  if(!OST.drill)OST.drill={history:[],totalOk:0,totalQ:0,bestStreak:0};
+  if(!OST.gre)OST.gre={history:[],totalOk:0,totalQ:0};
+  if(!OST.drill.history)OST.drill.history=[];
+  if(!OST.gre.history)OST.gre.history=[];
+  if(!OST.factRotation)OST.factRotation=null;
+}
+function saveOST(){try{localStorage.setItem('gre_orig_v1',JSON.stringify(OST));}catch(e){}}
+loadOST();
+
+// =============================================
+// FUN FACTS — math trivia + mathematician bios, rotate every 12h
+// =============================================
+var FACTS=[
+{t:'bio',x:'Niels Abel proved, at 21, that no general algebraic formula can solve fifth-degree equations.'},
+{t:'bio',x:'Jacob Bernoulli discovered the constant e while studying compound interest.'},
+{t:'bio',x:'Georg Cantor showed that infinite sets can have different sizes — some infinities are bigger than others.'},
+{t:'bio',x:'René Descartes fused algebra and geometry, giving us the (x, y) coordinate plane.'},
+{t:'bio',x:'Leonhard Euler was so prolific he kept publishing new papers for decades after going blind.'},
+{t:'bio',x:'Pierre de Fermat scribbled his "Last Theorem" in a book margin — it took 358 years to prove.'},
+{t:'bio',x:'Carl Friedrich Gauss allegedly summed 1 to 100 instantly as a child using pairing tricks.'},
+{t:'bio',x:'David Hilbert posed 23 unsolved problems in 1900 that shaped a century of mathematics.'},
+{t:'bio',x:'Ibn al-Haytham pioneered the scientific method and made major advances in optics and geometry.'},
+{t:'bio',x:'Carl Jacobi helped found the theory of elliptic functions and championed rigorous mathematical proof.'},
+{t:'bio',x:'Johannes Kepler used ellipses, not circles, to correctly describe planetary orbits.'},
+{t:'bio',x:'Joseph-Louis Lagrange reformulated mechanics using pure mathematics, without a single diagram.'},
+{t:'bio',x:'Gottfried Leibniz invented calculus independently of Newton — and gave us the notation we still use.'},
+{t:'bio',x:'Andrey Markov developed chains of probability that now power everything from weather models to text prediction.'},
+{t:'bio',x:'Isaac Newton invented calculus to help explain the motion of planets and falling objects.'},
+{t:'bio',x:'Emmy Noether proved a theorem linking every symmetry in physics to a conservation law.'},
+{t:'bio',x:'Blaise Pascal built one of the first mechanical calculators at age 19.'},
+{t:'bio',x:'Pythagoras and his followers believed whole numbers governed music, geometry, and the cosmos.'},
+{t:'bio',x:'Srinivasa Ramanujan produced thousands of original results with almost no formal training.'},
+{t:'bio',x:'Bernhard Riemann\'s geometry of curved space later became the mathematical basis of general relativity.'},
+{t:'bio',x:'Sophie Germain worked under a male pseudonym to have her number theory taken seriously.'},
+{t:'bio',x:'Alan Turing\'s abstract "machine" became the theoretical blueprint for every modern computer.'},
+{t:'bio',x:'Stanisław Ulam co-invented the Monte Carlo method while recovering from an illness.'},
+{t:'bio',x:'John von Neumann helped design the architecture that still underlies most computers today.'},
+{t:'bio',x:'Karl Weierstrass gave calculus its modern rigorous footing with precise definitions of limits.'},
+{t:'bio',x:'Euclid organized geometry into a system of axioms and proofs that stood for over 2,000 years.'},
+{t:'bio',x:'Archimedes estimated pi by trapping a circle between two many-sided polygons.'},
+{t:'bio',x:'Al-Khwarizmi\'s book on equations gave algebra both its method and its name.'},
+{t:'bio',x:'George Boole created an algebra of true and false that later became the logic of computer circuits.'},
+{t:'bio',x:'Augustin-Louis Cauchy formalized the modern definitions of limit, continuity, and convergence.'},
+{t:'bio',x:'Peter Dirichlet gave the first rigorous modern definition of a mathematical function.'},
+{t:'bio',x:'Paul Erdős had no fixed home and traveled constantly, co-authoring papers with over 500 mathematicians.'},
+{t:'bio',x:'Joseph Fourier showed that almost any repeating wave can be built from simple sine waves.'},
+{t:'bio',x:'Évariste Galois wrote down the foundations of group theory the night before a fatal duel, aged 20.'},
+{t:'bio',x:'G. H. Hardy championed pure mathematics for its beauty and mentored Ramanujan at Cambridge.'},
+{t:'bio',x:'Hypatia of Alexandria taught mathematics and astronomy and was one of the first women recorded in the field.'},
+{t:'bio',x:'Pierre-Simon Laplace developed key tools in probability and mathematical physics.'},
+{t:'bio',x:'John Napier invented logarithms to simplify the huge multiplications faced by astronomers.'},
+{t:'bio',x:'Henri Poincaré laid groundwork for chaos theory while studying the three-body problem.'},
+{t:'bio',x:'Bertrand Russell tried to place all of mathematics on a foundation of pure logic.'},
+{t:'bio',x:'Niccolò Tartaglia won a public contest by secretly solving cubic equations no one else could.'},
+{t:'bio',x:'John Venn popularized the overlapping-circle diagrams used to visualize set relationships.'},
+{t:'bio',x:'Zeno of Elea posed paradoxes about motion that puzzled mathematicians for over two thousand years.'},
+{t:'bio',x:'Leonardo Fibonacci introduced Hindu-Arabic numerals to Europe through a famous rabbit problem.'},
+{t:'bio',x:'Ada Lovelace wrote what is considered the first algorithm intended for a mechanical computer.'},
+{t:'bio',x:'Katherine Johnson\'s hand calculations of orbital mechanics helped send astronauts safely to space.'},
+{t:'bio',x:'Maryam Mirzakhani was the first woman to win the Fields Medal, mathematics\' highest honor.'},
+{t:'trivia',x:'Zero was not always considered a number — many ancient systems had no symbol for "nothing."'},
+{t:'trivia',x:'A number is divisible by 3 if the sum of its digits is divisible by 3 — no long division needed.'},
+{t:'trivia',x:'Any number multiplied by 9, then with its digits summed repeatedly, always reduces to 9.'},
+{t:'trivia',x:'Pi has been calculated to trillions of digits, yet only about 40 are needed to measure the observable universe to atomic precision.'},
+{t:'trivia',x:'The word "algorithm" comes from the name of the mathematician Al-Khwarizmi.'},
+{t:'trivia',x:'A palindrome number reads the same forwards and backwards, like 12321.'},
+{t:'trivia',x:'Multiplying any two-digit number by 11 can be done by splitting and adding its digits.'},
+{t:'trivia',x:'The Fibonacci sequence appears in sunflower seed spirals, pinecones, and nautilus shells.'},
+{t:'trivia',x:'There are infinitely many prime numbers, a fact Euclid proved over two thousand years ago.'},
+{t:'trivia',x:'A perfect number equals the sum of its own proper divisors — 6 = 1 + 2 + 3.'},
+{t:'trivia',x:'The golden ratio, about 1.618, appears in art, architecture, and the growth patterns of plants.'},
+{t:'trivia',x:'Every square number is the sum of consecutive odd numbers: 1, 1+3, 1+3+5, and so on.'},
+{t:'trivia',x:'The number 0.999... repeating is mathematically exactly equal to 1.'},
+{t:'trivia',x:'A googol is 1 followed by 100 zeros — far larger than the number of atoms in the observable universe.'},
+{t:'trivia',x:'Multiplying by 5 is the same as multiplying by 10 and halving the result.'},
+{t:'trivia',x:'The digits of any multiple of 9 always sum to a multiple of 9.'},
+{t:'trivia',x:'A number ending in 0 or 5 is always divisible by 5.'},
+{t:'trivia',x:'Pascal\'s Triangle hides the Fibonacci sequence along its diagonals.'},
+{t:'trivia',x:'The Pythagorean triple (3, 4, 5) is the smallest set of whole numbers satisfying a² + b² = c².'},
+{t:'trivia',x:'Squaring a number ending in 5 is easy: multiply the leading digits by one more than themselves, then append 25.'},
+{t:'trivia',x:'There is no largest prime number — new, larger primes are still being discovered today.'},
+{t:'trivia',x:'A number is divisible by 4 if its last two digits form a number divisible by 4.'},
+{t:'trivia',x:'The sum of the interior angles of any triangle is always exactly 180 degrees.'},
+{t:'trivia',x:'The chessboard wheat problem, doubling grains on each square, produces more wheat than exists on Earth.'},
+{t:'trivia',x:'A prime number greater than 3 is always either one more or one less than a multiple of 6.'},
+{t:'trivia',x:'The number e, about 2.718, arises naturally from continuous growth and compound interest.'},
+{t:'trivia',x:'Dividing by a fraction is the same as multiplying by its reciprocal.'},
+{t:'trivia',x:'A hexagon can be built from exactly six equilateral triangles.'},
+{t:'trivia',x:'The word "trivial" in mathematics often refers to the simplest possible case of a problem, not something unimportant.'},
+{t:'trivia',x:'Every even number greater than 2 is conjectured to be the sum of two primes — this is the unproven Goldbach Conjecture.'},
+{t:'trivia',x:'A number\'s digital root is found by repeatedly summing its digits until one digit remains.'},
+{t:'trivia',x:'The Pythagorean triple (5, 12, 13) is the second-smallest set of whole numbers satisfying a² + b² = c².'},
+{t:'trivia',x:'Percent means "per hundred," from the Latin phrase per centum.'},
+{t:'trivia',x:'To find 15% of a number quickly, take 10% and add half of that amount.'},
+{t:'trivia',x:'A number is divisible by 11 if the alternating sum of its digits is divisible by 11.'},
+{t:'trivia',x:'The Mandelbrot set is a fractal so detailed that zooming in reveals endless new patterns.'},
+{t:'trivia',x:'Multiplying by 25 is the same as multiplying by 100 and dividing by 4.'},
+{t:'trivia',x:'Every whole number greater than 1 can be broken into a unique set of prime factors.'},
+{t:'trivia',x:'The area of a circle formula, πr², was known in approximate form to ancient Egyptian and Babylonian mathematicians.'},
+{t:'trivia',x:'A cube has 6 faces, 12 edges, and 8 vertices — and 6 − 12 + 8 = 2, an example of Euler\'s formula for polyhedra.'},
+{t:'trivia',x:'Adding consecutive odd numbers starting from 1 always produces a perfect square.'},
+{t:'trivia',x:'The decimal expansion of 1/7 repeats in a six-digit cycle: 0.142857142857...'},
+{t:'trivia',x:'A number is a perfect square if it has an odd number of total divisors.'},
+{t:'trivia',x:'Multiplying by 9 can be done by multiplying by 10 and subtracting the original number.'},
+{t:'trivia',x:'The Rubik\'s Cube has over 43 quintillion possible configurations, but any scramble can be solved in 20 moves or fewer.'},
+{t:'trivia',x:'Similar triangles have proportional sides but the ratio of their areas equals the square of that proportion.'},
+{t:'trivia',x:'The number 1 is neither prime nor composite — it stands in a category of its own.'},
+{t:'trivia',x:'Legendre\'s formula counts how many times a prime divides a factorial without ever multiplying the factorial out.'}
+];
+function getCurrentFact(){
+  var now=Date.now(),TWELVE_H=12*60*60*1000;
+  var fr=OST.factRotation;
+  if(!fr||typeof fr.idx!=='number'||(now-fr.ts)>=TWELVE_H){
+    var idx=Math.floor(Math.random()*FACTS.length);
+    if(fr&&FACTS.length>1){while(idx===fr.idx){idx=Math.floor(Math.random()*FACTS.length);}}
+    fr={idx:idx,ts:now};
+    OST.factRotation=fr;saveOST();
+  }
+  return FACTS[fr.idx];
+}
+function renderFacts(){
+  var f=getCurrentFact();
+  var label=(f.t==='bio'?'Mathematician: ':'Did you know? ');
+  ['factTable','factDrill','factNumref','factGeometry','factGre','factShortcuts'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.querySelector('span').textContent=label+f.x;
+  });
+}
+
+// =============================================
+// SESSION-LENGTH SELECTOR (shared by Drill + GRE)
+// =============================================
+function setCount(kind,n){
+  if(kind==='drill')drillGoal=n;else greGoal=n;
+  document.querySelectorAll('#'+kind+'CountQuick .count-btn').forEach(function(b){b.classList.toggle('sel',+b.dataset.n===n);});
+  var ci=document.getElementById(kind+'CountCustom');if(ci)ci.value='';
+}
+function setCustomCount(kind,v){
+  var n=parseInt(v,10);if(isNaN(n))return;
+  n=Math.max(5,Math.min(50,n));
+  if(kind==='drill')drillGoal=n;else greGoal=n;
+  document.querySelectorAll('#'+kind+'CountQuick .count-btn').forEach(function(b){b.classList.remove('sel');});
+  document.getElementById(kind+'CountCustom').value=n;
+}
+
+function showTab(t){
+  var ids=['table','drill','numref','geometry','gre','shortcuts'];
+  document.querySelectorAll('.tabs .tab').forEach(function(el,i){el.classList.toggle('active',ids[i]===t)});
+  document.querySelectorAll('.panel').forEach(function(el){el.classList.remove('active')});
+  document.getElementById('tab-'+t).classList.add('active');
+}
+function showSub(group,t){
+  var prefix=group+'-';
+  document.querySelectorAll('#'+group+'SubTabs .stab').forEach(function(b){
+    b.classList.toggle('sel',b.getAttribute('onclick').indexOf("'"+t+"'")>=0);
+  });
+  document.querySelectorAll('[id^="'+prefix+'"]').forEach(function(el){
+    el.classList.toggle('active',el.id===prefix+t);
+  });
+}
+function setMode(m,cid){
+  if(cid==='drillModes') drillMode=m;
+  if(cid==='greModes') greMode=m;
+  document.querySelectorAll('#'+cid+' .pill').forEach(function(b){
+    b.classList.toggle('sel',b.getAttribute('onclick').indexOf("'"+m+"'")>=0);
+  });
+}
+
+// =============================================
+// TIMES TABLE
+// =============================================
+function buildPickers(id,arr,cb){
+  var c=document.getElementById(id);if(!c) return;
+  c.querySelectorAll('.nbtn').forEach(function(e){e.remove()});
+  tNums.forEach(function(n){
+    var b=document.createElement('button');
+    b.className='nbtn'+(arr.indexOf(n)>=0?' sel':'');
+    b.textContent=n+'×';
+    b.onclick=function(){
+      var i=arr.indexOf(n);
+      if(i>=0){if(arr.length>1){arr.splice(i,1);b.classList.remove('sel');}}
+      else{arr.push(n);b.classList.add('sel');}
+      if(cb) cb();
+    };
+    c.appendChild(b);
+  });
+}
+function tSelectAll(){tActive=tNums.slice();buildTimesTable();buildPickers('tablePickers',tActive,buildTimesTable);}
+function tSelectNone(){tActive=[1];buildTimesTable();buildPickers('tablePickers',tActive,buildTimesTable);}
+function tSelectRange(a,b){tActive=[];for(var i=a;i<=b;i++)tActive.push(i);buildTimesTable();buildPickers('tablePickers',tActive,buildTimesTable);}
+function buildTimesTable(){
+  var g=document.getElementById('timesGrid');g.innerHTML='';
+  var act=tActive.slice().sort(function(a,b){return a-b});
+  var thead=document.createElement('thead');
+  var hr=document.createElement('tr');
+  var co=document.createElement('th');co.textContent='×';co.className='tg-corner';hr.appendChild(co);
+  act.forEach(function(c){var th=document.createElement('th');th.textContent=c;hr.appendChild(th)});
+  thead.appendChild(hr);g.appendChild(thead);
+  var tbody=document.createElement('tbody');
+  act.forEach(function(r){
+    var tr=document.createElement('tr');
+    var rh=document.createElement('td');rh.textContent=r;rh.className='tg-row-h';tr.appendChild(rh);
+    act.forEach(function(c){
+      var td=document.createElement('td');td.className='tg-val';td.textContent=r*c;
+      td.dataset.r=r;td.dataset.c=c;
+      td.onclick=function(){hiCell(+this.dataset.r,+this.dataset.c)};
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  g.appendChild(tbody);
+}
+function hiCell(row,col){
+  document.querySelectorAll('.tg-val').forEach(function(el){
+    var r=+el.dataset.r,c=+el.dataset.c;
+    el.className='tg-val';
+    if(r===row&&c===col) el.classList.add('hi-both');
+    else if(r===row) el.classList.add('hi-row');
+    else if(c===col) el.classList.add('hi-col');
+  });
+}
+
+// =============================================
+// REFERENCE DATA
+// =============================================
+function buildSquares(){
+  var sg=document.getElementById('squaresGrid');
+  for(var n=1;n<=50;n++){
+    var d=document.createElement('div');d.className='sq-cell';
+    d.innerHTML='<div class="sq-n">'+n+'²</div><div class="sq-v">'+n*n+'</div>';
+    sg.appendChild(d);
+  }
+  var cg=document.getElementById('cubesGrid');
+  var cubeNums=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,25,30];
+  cubeNums.forEach(function(n){
+    var d=document.createElement('div');d.className='sq-cell';
+    d.innerHTML='<div class="sq-n">'+n+'³</div><div class="sq-v">'+n*n*n+'</div>';
+    cg.appendChild(d);
+  });
+}
+function buildRoots(){
+  var roots=[[1,'1.00','Exact'],[2,'1.41','≈ 1.414 — memorise'],[3,'1.73','≈ 1.732 — memorise'],[4,'2.00','Exact'],[5,'2.24','≈ 2.236'],[6,'2.45','≈ 2.449'],[7,'2.65','≈ 2.646'],[8,'2.83','≈ 2.828 = 2√2'],[9,'3.00','Exact'],[10,'3.16','≈ 3.162']];
+  var tb=document.getElementById('rootsBody');
+  roots.forEach(function(r){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="gc">√'+r[0]+'</td><td class="gc">'+r[1]+'</td><td class="tip-td">'+r[2]+'</td>';
+    tb.appendChild(tr);
+  });
+}
+function buildCubesTable(){
+  var cubes=[[1,1],[2,8],[3,27],[4,64],[5,125],[6,216],[7,343],[8,512],[9,729],[10,1000],[11,1331],[12,1728],[15,3375],[20,8000],[25,15625],[30,27000]];
+  var tb=document.getElementById('cubesBody');
+  cubes.forEach(function(r){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="gc">'+r[0]+'</td><td class="gc">'+r[1]+'</td><td>'+r[0]+'</td>';
+    tb.appendChild(tr);
+  });
+}
+function buildPowers10(){
+  var rows=[['10⁻⁶','0.000001','Millionth'],['10⁻⁵','0.00001','Hundred-thousandth'],['10⁻⁴','0.0001','Ten-thousandth'],['10⁻³','0.001','Thousandth'],['10⁻²','0.01','Hundredth'],['10⁻¹','0.1','Tenth'],['10⁰','1','One'],['10¹','10','Ten'],['10²','100','Hundred'],['10³','1,000','Thousand'],['10⁴','10,000','Ten thousand'],['10⁶','1,000,000','Million'],['10⁹','1,000,000,000','Billion'],['10¹²','1,000,000,000,000','Trillion']];
+  var tb=document.getElementById('powers10Body');
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="gc">'+r[0]+'</td><td class="gc">'+r[1]+'</td><td>'+r[1]+'</td><td class="tip-td">'+r[2]+'</td>';
+    tb.appendChild(tr);
+  });
+}
+function buildDivisib(){
+  var rules=[
+    ['÷ 2','Last digit is even (0,2,4,6,8)','128 → last digit 8 ✓'],
+    ['÷ 3','Sum of all digits divisible by 3','123 → 1+2+3=6 ÷3 ✓'],
+    ['÷ 4','Last two digits divisible by 4','1,716 → 16÷4=4 ✓'],
+    ['÷ 5','Last digit is 0 or 5','135 → ends in 5 ✓'],
+    ['÷ 6','Divisible by BOTH 2 AND 3','114 → even ✓, 1+1+4=6 ✓'],
+    ['÷ 7','Double last digit, subtract from rest. Repeat if needed','203 → 3×2=6, 20−6=14 ÷7 ✓'],
+    ['÷ 8','Last three digits divisible by 8','1,120 → 120÷8=15 ✓'],
+    ['÷ 9','Sum of all digits divisible by 9','729 → 7+2+9=18 ÷9 ✓'],
+    ['÷ 10','Last digit is 0','1,230 → ends in 0 ✓'],
+    ['÷ 11','Alternating sum (odd positions − even positions) divisible by 11','2,728 → (2+2)−(7+8)=−11 ✓'],
+  ];
+  var c=document.getElementById('divisibCards');
+  rules.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">Divisible by '+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>Example: '+r[2]+'</em></div>';
+    c.appendChild(d);
+  });
+}
+function buildPctTable(){
+  var rows=[['1/2','0.5','50%','Half — instant'],['1/3','0.333','33.3%','÷3'],['2/3','0.667','66.7%','2×(÷3)'],['1/4','0.25','25%','÷4'],['3/4','0.75','75%','1−¼'],['1/5','0.2','20%','÷5'],['2/5','0.4','40%','2×0.2'],['3/5','0.6','60%','3×0.2'],['4/5','0.8','80%','1−⅕'],['1/6','0.167','16.7%','÷6'],['1/7','0.143','14.3%','Memorise'],['1/8','0.125','12.5%','÷2÷2÷2'],['3/8','0.375','37.5%','3×0.125'],['5/8','0.625','62.5%','5×0.125'],['7/8','0.875','87.5%','7×0.125'],['1/9','0.111','11.1%','Digits repeat'],['1/10','0.1','10%','Move decimal'],['1/12','0.083','8.3%','Time/rate Qs'],['1/16','0.0625','6.25%','÷16'],['1/20','0.05','5%','÷20']];
+  var tb=document.getElementById('pctBody');
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td class="gc">'+r[0]+'</td><td>'+r[1]+'</td><td class="gc">'+r[2]+'</td><td class="tip-td">'+r[3]+'</td>';
+    tb.appendChild(tr);
+  });
+  var ratioRules=[
+    ['GCF Method','To simplify a ratio, divide both sides by their GCF.\n32:48 → GCF=16 → 2:3'],
+    ['Cross-cancel in fractions','(3/4)÷(9/8) = (3/4)×(8/9) = 24/36 = 2/3. Cross-cancel 3 and 9 by 3, 4 and 8 by 4: (1/1)×(2/3) = 2/3'],
+    ['Part:Part vs Part:Whole','Ratio 3:5 means 3 parts to 5 parts. Total = 8 parts. First fraction = 3/8, second = 5/8.'],
+    ['Equivalent ratios','a:b = ka:kb for any k≠0. Use to find missing values: if 3:4 = x:12, then k=3, so x=9.'],
+  ];
+  var rc=document.getElementById('ratioCards');
+  ratioRules.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1].replace(/\n/g,'<br>')+'</div>';
+    rc.appendChild(d);
+  });
+}
+function buildUnitDigits(){
+  var cycles=[[2,[2,4,8,6],'7⁴³: 43÷4=10 R3 → cycle[3]=8'],[3,[3,9,7,1],'3⁵: 5÷4=1 R1 → cycle[1]=3'],[4,[4,6,4,6],'4^even=6, 4^odd=4'],[5,[5,5,5,5],'Always 5'],[6,[6,6,6,6],'Always 6'],[7,[7,9,3,1],'7²⁵: 25÷4=6 R1 → cycle[1]=7'],[8,[8,4,2,6],'8³: 3÷4 R3 → cycle[3]=2'],[9,[9,1,9,1],'9^odd=9, 9^even=1'],[0,[0,0,0,0],'Always 0'],[1,[1,1,1,1],'Always 1']];
+  var c=document.getElementById('unitDigitCards');
+  cycles.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">Unit digits of powers of '+r[0]+'</div><div class="rule-body">Cycle (length 4): <strong>'+r[1].join(' → ')+'</strong><br><em>Example: '+r[2]+'</em></div>';
+    c.appendChild(d);
+  });
+}
+function buildIntegers(){
+  var rules=[
+    ['Even + Even','= Even','2+4=6'],
+    ['Even + Odd','= Odd','2+3=5'],
+    ['Odd + Odd','= Even','3+5=8'],
+    ['Even × Even','= Even','4×6=24'],
+    ['Even × Odd','= Even','4×3=12'],
+    ['Odd × Odd','= Odd','3×5=15'],
+    ['Even ÷ Even','= Even OR Odd (or non-integer)','8÷4=2 (even), 12÷4=3 (odd)'],
+    ['Consecutive integers','n, n+1, n+2 … Their sum = n×(count) + 0+1+2+… Product of any 3 consecutive integers is divisible by 6','3 consec: 4+5+6=15. 4×5×6=120=6×20'],
+    ['Sum of n consec integers','= n × (middle term). Always divisible by n if n is odd','1+2+3+4+5 = 5×3=15'],
+    ['3 consecutive integers','Always divisible by 6. One must be divisible by 2, one by 3','6,7,8 → 6×7×8=336=6×56'],
+    ['Positive × Positive','= Positive',''],
+    ['Negative × Negative','= Positive','−3×−4=12'],
+    ['Positive × Negative','= Negative','3×−4=−12'],
+    ['Even number of negatives multiplied','= Positive','(−1)(−1)(−1)(−1)=1'],
+    ['Odd number of negatives multiplied','= Negative','(−1)(−1)(−1)=−1'],
+  ];
+  var c=document.getElementById('integerCards');
+  rules.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+' = '+r[1]+'</div><div class="rule-body">'+r[2]+(r[2]?'':r[1])+'</div>';
+    c.appendChild(d);
+  });
+}
+function buildDecimals(){
+  var c=document.getElementById('decimalCards');
+  var rules=[
+    ['Terminating decimals','Denominator (in lowest terms) has ONLY 2s and 5s as prime factors','1/8 = 1/2³ → 0.125 ✓ terminates'],
+    ['Non-terminating repeating','Denominator has prime factors OTHER than 2 and 5','1/3 → 0.333… repeats; 1/7 → 0.142857… repeats'],
+    ['Converting to terminating','Multiply top and bottom to make denominator a power of 10','3/4 = 3×25/4×25 = 75/100 = 0.75'],
+    ['Non-terminating non-repeating','Irrational numbers — cannot be expressed as p/q','√2 = 1.41421356… no pattern'],
+  ];
+  rules.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>'+r[2]+'</em></div>';
+    c.appendChild(d);
+  });
+  var rows=[['1/2','2','Yes','0.5'],['1/4','2²','Yes','0.25'],['1/5','5','Yes','0.2'],['1/8','2³','Yes','0.125'],['1/3','3','No','0.333…'],['1/6','2×3','No','0.1666…'],['1/7','7','No','0.142857…'],['1/9','3²','No','0.111…'],['7/12','2²×3','No','0.5833…'],['9/20','2²×5','Yes','0.45']];
+  var tb=document.getElementById('decimalBody');
+  rows.forEach(function(r){
+    var tr=document.createElement('tr');
+    var ok=r[2]==='Yes';
+    tr.innerHTML='<td class="gc">'+r[0]+'</td><td>'+r[1]+'</td><td style="color:'+(ok?'var(--ok)':'var(--no)')+'">'+r[2]+'</td><td>'+r[3]+'</td>';
+    tb.appendChild(tr);
+  });
+}
+function buildZeroes(){
+  var c=document.getElementById('zeroCards');
+  var cards=[
+    ['Trailing zeroes in a product','Count pairs of (2×5) in prime factorisation. The number of 5s usually limits the count since 2s are more abundant.','In 10! = 10×9×8…×1: Count 5s: ⌊10/5⌋=2. So 2 trailing zeroes. (10!=3,628,800 ✓)'],
+    ['Trailing zeroes in n!','Use Legendre on 5: ⌊n/5⌋ + ⌊n/25⌋ + ⌊n/125⌋ + …','100!: ⌊100/5⌋+⌊100/25⌋ = 20+4 = 24 trailing zeroes'],
+    ['Trailing zeroes in a number','Simply count the 0s at the end','12,300,000 has 5 trailing zeroes'],
+    ['Leading zeroes in a decimal','In 0.00347 — the zeroes after the decimal point and before the first significant digit','0.00347 has 2 leading zeroes. Comes from 10⁻³ magnitude.'],
+    ['Leading zeroes formula','If a number is expressed as N × 10⁻k, it has (k−1) leading zeroes after the decimal point','3.47 × 10⁻³ = 0.00347 → 2 leading zeroes (k=3, so k−1=2)'],
+  ];
+  cards.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>'+r[2]+'</em></div>';
+    c.appendChild(d);
+  });
+}
+function buildFactorial(){
+  var c=document.getElementById('factCards');
+  var cards=[
+    ['Legendre\'s Formula','To find how many times prime p divides n!:<br><strong>⌊n/p⌋ + ⌊n/p²⌋ + ⌊n/p³⌋ + …</strong><br>Stop when p^k > n. Each term counts multiples that contribute one extra factor of p.',''],
+    ['How many 5s in 100!','⌊100/5⌋ + ⌊100/25⌋ + ⌊100/125⌋<br>= 20 + 4 + 0 = <strong>24</strong>','(125 > 100 so stop)'],
+    ['How many 2s in 512!','⌊512/2⌋ + ⌊512/4⌋ + ⌊512/8⌋ + ⌊512/16⌋ + ⌊512/32⌋ + ⌊512/64⌋ + ⌊512/128⌋ + ⌊512/256⌋ + ⌊512/512⌋<br>= 256+128+64+32+16+8+4+2+1 = <strong>511</strong>','This is the GRE\'s famous example: 2^9=512, 2^10=1024>512 so stop after 9 terms.'],
+    ['How many 3s in 30!','⌊30/3⌋ + ⌊30/9⌋ + ⌊30/27⌋<br>= 10 + 3 + 1 = <strong>14</strong>','(81 > 30 so stop after 27)'],
+    ['How many 6s in 25!','6=2×3. Count 3s (the limiting factor): ⌊25/3⌋+⌊25/9⌋+⌊25/27⌋ = 8+2+0 = <strong>10</strong>','The answer is the count of 3s, since 3s are rarer than 2s.'],
+    ['How many 24s in 100!','24=2³×3. Need triples of 2 AND singles of 3.<br>Count 2s: ⌊100/2⌋+⌊100/4⌋+…= 97. Triples of 2 = ⌊97/3⌋=32.<br>Count 3s: ⌊100/3⌋+⌊100/9⌋+⌊100/27⌋+⌊100/81⌋=33+11+3+1=48.<br>Min(32,48) = <strong>32</strong>','The limiting factor is the triples of 2 needed.'],
+  ];
+  cards.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+(r[2]?'<br><em>'+r[2]+'</em>':'')+'</div>';
+    c.appendChild(d);
+  });
+}
+function buildRealNums(){
+  var c=document.getElementById('realNumCards');
+  var cards=[
+    ['0 < x < 1: Squaring makes smaller','x² < x when 0 < x < 1','(0.5)² = 0.25 < 0.5'],
+    ['0 < x < 1: Reciprocal makes larger','1/x > 1 when 0 < x < 1','1/0.5 = 2 > 0.5'],
+    ['0 < x < 1: x³ < x² < x < 1','Powers decrease the value','0.8³=0.512, 0.8²=0.64, 0.8'],
+    ['0 < x < 1: √x > x','Square root makes larger','√0.25 = 0.5 > 0.25'],
+    ['0 < x < y < 1: xy < x and xy < y','Product of two numbers in (0,1) is smaller than either','0.5 × 0.6 = 0.3 < 0.5'],
+    ['-1 < x < 0: x² is in (0,1)','Squaring a negative fraction gives a small positive','(−0.5)² = 0.25'],
+    ['-1 < x < 0: x³ is in (−1,0)','Cubing keeps it negative and small in magnitude','(−0.5)³ = −0.125'],
+    ['-1 < x < 0: |x| < 1 but 1/x < -1','Reciprocal has larger magnitude','1/(−0.5) = −2, |−2|=2 > 1'],
+    ['GRE trap: Column A x², Column B x','If 0<x<1: A<B. If x>1: A>B. Cannot determine without knowing x','Classic "cannot determine" trap'],
+    ['x = 0 or x = 1 are special boundary cases','Test these: 0²=0, 1²=1. These are equal to x, not different','Always test 0, 1, −1 in QC questions'],
+  ];
+  cards.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>'+r[2]+'</em></div>';
+    c.appendChild(d);
+  });
+}
+
+// =============================================
+// GEOMETRY
+// =============================================
+function buildPythagorean(){
+  var triples=[[3,4,5],[5,12,13],[8,15,17],[7,24,25]];
+  var colors=['#D4891C','#5aaa20','#1a5c8a','#8a1a4a'];
+  var wrap=document.getElementById('pythTriWrap');
+  triples.forEach(function(t,idx){
+    var card=document.createElement('div');card.className='tri-card';
+    var a=t[0],b=t[1],c=t[2];
+    var W=140,H=110,pad=22;
+    var scaleX=(W-pad*2)/b,scaleY=(H-pad*2)/a;
+    var sc=Math.min(scaleX,scaleY);
+    var bw=b*sc,ah=a*sc;
+    var x0=pad,y0=H-pad,x1=pad+bw,y1=H-pad,x2=pad,y2=H-pad-ah;
+    var mx=(x0+x1)/2,my=y1+13;
+    var lx=x0-13,ly=(y0+y2)/2;
+    var hx=(x1+x2)/2+8,hy=(y1+y2)/2-6;
+    var col=colors[idx];
+    card.innerHTML='<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'
+      +'<polygon points="'+x0+','+y0+' '+x1+','+y1+' '+x2+','+y2+'" fill="'+col+'22" stroke="'+col+'" stroke-width="2.5"/>'
+      +'<rect x="'+x0+'" y="'+(y0-10)+'" width="10" height="10" fill="none" stroke="'+col+'" stroke-width="1.5"/>'
+      +'<text x="'+mx+'" y="'+my+'" text-anchor="middle" font-size="13" font-weight="800" fill="'+col+'">'+b+'</text>'
+      +'<text x="'+lx+'" y="'+ly+'" text-anchor="middle" font-size="13" font-weight="800" fill="'+col+'" transform="rotate(-90,'+lx+','+ly+')">'+a+'</text>'
+      +'<text x="'+hx+'" y="'+hy+'" text-anchor="start" font-size="13" font-weight="800" fill="'+col+'">'+c+'</text>'
+      +'</svg>';
+    var label=document.createElement('div');label.className='tri-label';label.textContent='('+t.join(', ')+')';
+    var ratio=document.createElement('div');ratio.className='tri-ratio';ratio.textContent=a+'² + '+b+'² = '+c+'²  →  '+a*a+' + '+b*b+' = '+c*c;
+    card.appendChild(label);card.appendChild(ratio);
+    wrap.appendChild(card);
+  });
+  var multDiv=document.getElementById('pythMultiples');
+  var multiples=[['(3,4,5)×2','(6,8,10)'],['(3,4,5)×3','(9,12,15)'],['(3,4,5)×4','(12,16,20)'],['(3,4,5)×5','(15,20,25)'],['(5,12,13)×2','(10,24,26)'],['(8,15,17)×2','(16,30,34)'],['(7,24,25)×2','(14,48,50)']];
+  multiples.forEach(function(m){
+    var d=document.createElement('div');d.className='rule-box';
+    d.style.display='flex';d.style.justifyContent='space-between';d.style.alignItems='center';
+    d.innerHTML='<span class="rule-title" style="margin:0">'+m[0]+'</span><span style="font-size:16px;font-weight:800;color:var(--gd)">'+m[1]+'</span>';
+    multDiv.appendChild(d);
+  });
+}
+
+function buildSimTri(){
+  var c=document.getElementById('simTriContent');
+  // SVG of two similar triangles
+  var W=320,H=160,pad=20;
+  // Triangle 1: A(20,140), B(120,140), C(20,40)
+  var A1=[20,140],B1=[120,140],C1=[20,50];
+  // Triangle 2 (scaled 1.6x): D(170,140), E(290,140), F(170,50) approx
+  var k=1.5;
+  var A2=[170,140],B2=[170+100*k,140],C2=[170,140-90*k];
+  if(B2[0]>W-pad)B2[0]=W-pad;
+  if(C2[1]<pad)C2[1]=pad;
+  var svg='<svg width="100%" viewBox="0 0 '+W+' '+H+'" style="margin-bottom:10px">'
+    // Triangle 1
+    +'<polygon points="'+A1.join(',')+' '+B1.join(',')+' '+C1.join(',')+'" fill="#FBF0DC" stroke="#D4891C" stroke-width="2.5"/>'
+    +'<rect x="'+A1[0]+'" y="'+(A1[1]-10)+'" width="10" height="10" fill="none" stroke="#D4891C" stroke-width="1.5"/>'
+    +'<text x="'+A1[0]+'" y="'+(A1[1]+15)+'" font-size="12" font-weight="800" fill="#5C3A05">A</text>'
+    +'<text x="'+(B1[0]+3)+'" y="'+(B1[1]+15)+'" font-size="12" font-weight="800" fill="#5C3A05">B</text>'
+    +'<text x="'+(C1[0]-15)+'" y="'+(C1[1])+'" font-size="12" font-weight="800" fill="#5C3A05">C</text>'
+    // side labels T1
+    +'<text x="'+(A1[0]+B1[0])/2+'" y="'+(A1[1]+14)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#A86810">a</text>'
+    +'<text x="'+(A1[0]-13)+'" y="'+(A1[1]+C1[1])/2+'" text-anchor="middle" font-size="11" font-weight="700" fill="#A86810">b</text>'
+    +'<text x="'+(B1[0]+C1[0])/2+8+'" y="'+(B1[1]+C1[1])/2+'" text-anchor="start" font-size="11" font-weight="700" fill="#A86810">c</text>'
+    // Triangle 2
+    +'<polygon points="'+A2.join(',')+' '+B2.join(',')+' '+C2.join(',')+'" fill="#E8F4FD" stroke="#1a5c8a" stroke-width="2.5"/>'
+    +'<rect x="'+A2[0]+'" y="'+(A2[1]-10)+'" width="10" height="10" fill="none" stroke="#1a5c8a" stroke-width="1.5"/>'
+    +'<text x="'+A2[0]+'" y="'+(A2[1]+15)+'" font-size="12" font-weight="800" fill="#1a5c8a">D</text>'
+    +'<text x="'+(B2[0]+3)+'" y="'+(B2[1]+15)+'" font-size="12" font-weight="800" fill="#1a5c8a">E</text>'
+    +'<text x="'+(C2[0]-15)+'" y="'+(C2[1])+'" font-size="12" font-weight="800" fill="#1a5c8a">F</text>'
+    // side labels T2
+    +'<text x="'+(A2[0]+B2[0])/2+'" y="'+(A2[1]+14)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#1a5c8a">ka</text>'
+    +'<text x="'+(A2[0]-16)+'" y="'+(A2[1]+C2[1])/2+'" text-anchor="middle" font-size="11" font-weight="700" fill="#1a5c8a">kb</text>'
+    +'<text x="'+(B2[0]+C2[0])/2+8+'" y="'+(B2[1]+C2[1])/2+'" text-anchor="start" font-size="11" font-weight="700" fill="#1a5c8a">kc</text>'
+    +'</svg>';
+  var rules=[
+    ['Corresponding sides ratio','AB/DE = BC/EF = AC/DF = 1/k (same ratio for all pairs)'],
+    ['Perimeter ratio','Perimeter△ABC / Perimeter△DEF = 1/k (linear — same as sides)'],
+    ['Area ratio','Area△ABC / Area△DEF = 1/k² (squared! This is the most tested GRE fact about similar triangles)'],
+    ['AA Similarity','If two angles of one triangle equal two angles of another → triangles are similar'],
+    ['GRE tip','When a triangle is split by a line parallel to its base, the two triangles formed are similar. The ratio of their areas = square of the ratio of corresponding sides.'],
+    ['Example','Sides ratio 2:3. Perimeter ratio 2:3. Area ratio 4:9 (= 2²:3²).'],
+  ];
+  var html=svg;
+  rules.forEach(function(r){
+    html+='<div class="rule-box"><div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'</div></div>';
+  });
+  c.innerHTML=html;
+}
+
+// =============================================
+// SHORTCUTS
+// =============================================
+function buildShortcuts(){
+  var mental=[
+    ['×9','9×n = 10n − n','9×7 = 70−7 = 63'],
+    ['×11','11×n = 10n + n','11×8 = 80+8 = 88'],
+    ['×12','12×n = 10n + 2n','12×7 = 70+14 = 84'],
+    ['×5','n×5 = n×10÷2','48×5 = 480÷2 = 240'],
+    ['×25','n×25 = n×100÷4','36×25 = 3600÷4 = 900'],
+    ['×15','n×15 = n×10 + n×5','14×15 = 140+70 = 210'],
+    ['Square n5','(n5)² = n(n+1) then 25','35² = 3×4=12 → 1225'],
+    ['Diff of squares','a²−b² = (a+b)(a−b)','99×101 = 100²−1 = 9999'],
+    ['% swap','a% of b = b% of a','7% of 50 = 50% of 7 = 3.5'],
+    ['% change','(new−old)/old × 100','60→75: 15/60×100 = 25%'],
+  ];
+  var c=document.getElementById('mentalCards');
+  mental.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>'+r[2]+'</em></div>';
+    c.appendChild(d);
+  });
+  var pctTricks=[
+    ['Find 10% first','Divide by 10, then scale','10% of 370 = 37. So 30% = 111, 5% = 18.5'],
+    ['Break awkward %','Split into known parts','17.5% of 80 = 10%+5%+2.5% = 8+4+2 = 14'],
+    ['Fraction shortcut','Convert % to fraction first','37.5% of 64 = 3/8 × 64 = 24'],
+    ['Reverse % problems','If x% of y = z, then y% of x = z also','4% of 75 = 75% of 4 = 3'],
+    ['% increase then decrease','Not the same as the original','+20% then −20%: 1.2×0.8=0.96, net −4%'],
+    ['Sequential %','Multiply factors, not add','+30% then +40%: 1.3×1.4=1.82 = +82%'],
+  ];
+  var pc=document.getElementById('pctTrickCards');
+  pctTricks.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>'+r[2]+'</em></div>';
+    pc.appendChild(d);
+  });
+  var cards1320=[
+    ['13–19: Split method','13×n = 10n + 3n  |  17×n = 10n + 7n','17×8 = 80+56 = 136  |  13×9 = 90+27 = 117'],
+    ['Even 14,16,18: Double method','18×n = 2×(9×n)  |  16×n = 2×(8×n)','18×7 = 2×63 = 126  |  16×8 = 2×64 = 128'],
+    ['20×n','= 2×(10×n)','20×14 = 2×140 = 280'],
+    ['Perfect squares 13²–20²','13²=169, 14²=196, 15²=225, 16²=256','17²=289, 18²=324, 19²=361, 20²=400'],
+    ['Gap between squares grows','n²−(n−1)² = 2n−1','20²−19² = 39. Useful for estimation.'],
+    ['13–20 divisibility notes','13,17,19 are prime. 14=2×7, 15=3×5, 16=2⁴, 18=2×3², 20=2²×5','Helps with factor/simplification problems'],
+  ];
+  var c2=document.getElementById('cards1320');
+  cards1320.forEach(function(r){
+    var d=document.createElement('div');d.className='rule-box';
+    d.innerHTML='<div class="rule-title">'+r[0]+'</div><div class="rule-body">'+r[1]+'<br><em>'+r[2]+'</em></div>';
+    c2.appendChild(d);
+  });
+}
+
+// =============================================
+// DRILL ENGINE
+// =============================================
+var DRILL_QS=[];
+function buildDrillPool(){
+  // Number property MCQ questions
+  DRILL_QS=[
+    {type:'numprops',q:'What is the units digit of 7⁴³?',choices:['1','3','7','9'],ans:1,exp:'7 cycles in 4: 7,9,3,1. 43÷4=10 R3. Cycle[3]=3.'},
+    {type:'numprops',q:'Is 1,716 divisible by 4?',choices:['Yes','No'],ans:0,exp:'Last two digits: 16. 16÷4=4. Yes.'},
+    {type:'numprops',q:'How many trailing zeroes in 25!?',choices:['4','5','6','7'],ans:2,exp:'⌊25/5⌋+⌊25/25⌋ = 5+1 = 6'},
+    {type:'numprops',q:'Does 7/12 terminate as a decimal?',choices:['Yes — terminates','No — repeating'],ans:1,exp:'12=2²×3. Has factor of 3 (not 2 or 5 only). Non-terminating.'},
+    {type:'numprops',q:'0 < x < 1. Which is largest?',choices:['x','x²','x³','√x'],ans:3,exp:'For 0<x<1: √x > x > x² > x³. Roots make bigger, powers make smaller.'},
+    {type:'numprops',q:'What is the units digit of 3⁵³?',choices:['1','3','7','9'],ans:1,exp:'3 cycles: 3,9,7,1. 53÷4=13 R1. Cycle[1]=3.'},
+    {type:'numprops',q:'Sum of 3 consecutive integers starting at n. Which is always true?',choices:['Divisible by 2','Divisible by 3','Always even','Always prime'],ans:1,exp:'n+(n+1)+(n+2)=3n+3=3(n+1). Always divisible by 3.'},
+    {type:'numprops',q:'Odd × Odd = ?',choices:['Always odd','Always even','Could be either','Always divisible by 4'],ans:0,exp:'Odd×Odd is always odd. E.g. 3×5=15.'},
+    {type:'numprops',q:'How many 2s in 16!?',choices:['11','13','15','17'],ans:2,exp:'⌊16/2⌋+⌊16/4⌋+⌊16/8⌋+⌊16/16⌋=8+4+2+1=15'},
+    {type:'numprops',q:'Does 9/20 terminate?',choices:['Yes','No'],ans:0,exp:'20=2²×5. Only 2s and 5s. Terminates: 9/20=0.45'},
+    {type:'numprops',q:'Which unit digit cycle has length 1 (always same)?',choices:['2','5','7','3'],ans:1,exp:'5^n always ends in 5. Similarly 0,1,6 always cycle in 1.'},
+    {type:'numprops',q:'-1 < x < 0. Which is positive?',choices:['x','x³','x²','1/x'],ans:2,exp:'x²=(negative)²=positive. x,x³,1/x are all negative for x in (−1,0).'},
+  ];
+}
+function makeDrillQ(){
+  var pool=dActive.length?dActive:tNums;
+  var n=pool[Math.floor(Math.random()*pool.length)];
+  var m=Math.floor(Math.random()*20)+1;
+  if(drillMode==='mult') return {type:'mult',q:n+' × '+m+' = ?',ans:n*m,choices:null,exp:n+'×'+m+'='+n*m+(n>=13?' Tip: '+(Math.floor(n/10)*10)+'×'+m+'+'+(n%10)+'×'+m+'='+(Math.floor(n/10)*10*m)+'+'+(n%10*m)+'='+n*m:''),ctx:''};
+  if(drillMode==='div'){var prod=n*m;return {type:'div',q:prod+' ÷ '+n+' = ?',ans:m,choices:null,exp:'Because '+n+'×'+m+'='+prod,ctx:''};}
+  if(drillMode==='mix') return Math.random()<0.5?makeDrillQWithMode('mult'):makeDrillQWithMode('div');
+  if(drillMode==='pct'){
+    var pcts=[10,20,25,50,75,40,60,30,15,5,80];
+    var bases=[20,40,50,60,80,100,120,150,200,300];
+    var p=pcts[Math.floor(Math.random()*pcts.length)];
+    var b=bases[Math.floor(Math.random()*bases.length)];
+    var ans=Math.round(p*b/100);
+    return {type:'pct',q:p+'% of '+b+' = ?',ans:ans,choices:null,exp:p+'% of '+b+' = '+b+'×'+p+'/100 = '+ans,ctx:'Percentage:'};
+  }
+  if(drillMode==='numprops'){
+    var q=DRILL_QS[Math.floor(Math.random()*DRILL_QS.length)];
+    return q;
+  }
+  return makeDrillQWithMode('mult');
+}
+function makeDrillQWithMode(m){
+  var pool=dActive.length?dActive:tNums;
+  var n=pool[Math.floor(Math.random()*pool.length)];
+  var mv=Math.floor(Math.random()*20)+1;
+  if(m==='mult') return {type:'mult',q:n+' × '+mv+' = ?',ans:n*mv,choices:null,exp:'',ctx:''};
+  var prod=n*mv;return {type:'div',q:prod+' ÷ '+n+' = ?',ans:mv,choices:null,exp:'Because '+n+'×'+mv+'='+prod,ctx:''};
+}
+
+var drillGoal=10,bestDrillSt=0;
+
+function startDrill(){
+  dSc=0;dSt=0;dTo=0;dOn=true;
+  document.getElementById('drillCountPicker').style.display='none';
+  document.getElementById('drillSummary').style.display='none';
+  document.getElementById('drillCard').style.display='block';
+  updD();document.getElementById('dProgress').style.width='0%';
+  document.getElementById('drillStartBtn').style.display='none';
+  nextDrill();
+}
+function nextDrill(){
+  if(dOn&&dTo>=drillGoal){finishDrill();return;}
+  document.getElementById('dNext').style.display='none';
+  document.getElementById('dExplain').className='explain-box';
+  document.getElementById('dFb').textContent='';document.getElementById('dFb').className='fbk';
+  curQ=makeDrillQ();
+  renderDrill(curQ);
+}
+function recordDrill(ok,type){
+  dTo++;if(ok){dSc++;dSt++;}else dSt=0;
+  if(dSt>bestDrillSt){bestDrillSt=dSt;OST.drill.bestStreak=bestDrillSt;}
+  OST.drill.totalQ++;if(ok)OST.drill.totalOk++;
+  OST.drill.history.push({ok:ok,type:type,ts:Date.now()});
+  if(OST.drill.history.length>500)OST.drill.history=OST.drill.history.slice(-500);
+  saveOST();
+}
+function finishDrill(){
+  dOn=false;
+  document.getElementById('drillCard').style.display='none';
+  var acc=dTo>0?Math.round(dSc/dTo*100):0;
+  document.getElementById('drillSumScore').textContent=dSc+'/'+dTo;
+  document.getElementById('drillSumDetail').textContent=acc+'% accuracy · best streak '+bestDrillSt;
+  document.getElementById('drillSummary').style.display='block';
+}
+function restartDrill(){
+  document.getElementById('drillSummary').style.display='none';
+  document.getElementById('drillCard').style.display='block';
+  document.getElementById('drillCountPicker').style.display='block';
+  document.getElementById('drillStartBtn').style.display='block';
+}
+function renderDrill(q){
+  var tags={mult:'qt-mult',div:'qt-div',pct:'qt-pct',numprops:'qt-num'};
+  var labels={mult:'Multiply',div:'Divide',pct:'Percentage',numprops:'Number Property'};
+  document.getElementById('dQTag').innerHTML='<span class="qtype-tag '+(tags[q.type]||'qt-num')+'">'+(labels[q.type]||'Drill')+'</span>';
+  document.getElementById('dCtx').textContent=q.ctx||'';
+  document.getElementById('dQ').textContent=q.q;
+  var ca=document.getElementById('dChoicesArea'),ia=document.getElementById('dInputArea');
+  ca.innerHTML='';
+  if(q.choices){
+    ia.style.display='none';
+    var div=document.createElement('div');div.className='choices';
+    q.choices.forEach(function(ch,i){
+      var b=document.createElement('button');b.className='choice';b.textContent=ch;
+      b.onclick=function(){
+        var ok=i===q.ans;
+        recordDrill(ok,q.type);
+        if(ok)b.classList.add('right');else{b.classList.add('wrong');div.querySelectorAll('.choice')[q.ans].classList.add('right');}
+        div.querySelectorAll('.choice').forEach(function(btn){btn.disabled=true});
+        showDFb(ok,q.exp);updD();
+        document.getElementById('dProgress').style.width=Math.min(dTo*2,100)+'%';
+        if(ok)setTimeout(nextDrill,800);else document.getElementById('dNext').style.display='inline-block';
+      };
+      div.appendChild(b);
+    });
+    ca.appendChild(div);
+  } else {
+    ia.style.display='flex';
+    var inp=document.getElementById('dInp');inp.disabled=false;inp.value='';
+    setTimeout(function(){inp.focus();},80);
+  }
+}
+function checkDrill(){
+  if(!dOn||!curQ||curQ.choices) return;
+  var v=parseFloat(document.getElementById('dInp').value);if(isNaN(v)) return;
+  var ok=Math.abs(v-curQ.ans)<0.6;
+  recordDrill(ok,curQ.type);
+  document.getElementById('dInp').disabled=true;
+  showDFb(ok,curQ.exp);updD();
+  document.getElementById('dProgress').style.width=Math.min(dTo*2,100)+'%';
+  if(ok)setTimeout(nextDrill,750);else document.getElementById('dNext').style.display='inline-block';
+}
+function showDFb(ok,exp){
+  var fb=document.getElementById('dFb');
+  if(ok){fb.textContent='Correct!'+(dSt>1?' 🔥 '+dSt+'!':'');fb.className='fbk ok';}
+  else{fb.textContent='Not quite.';fb.className='fbk no';var eb=document.getElementById('dExplain');eb.innerHTML=exp;eb.className='explain-box show';}
+}
+function updD(){
+  document.getElementById('dScore').textContent=dSc;
+  document.getElementById('dStreak').textContent=dSt;
+  document.getElementById('dTotal').textContent=dTo;
+  document.getElementById('dPct').textContent=dTo>0?Math.round(dSc/dTo*100)+'%':'—';
+}
+
+// =============================================
+// GRE QUESTION BANK
+// =============================================
+var ALL_GRE=[];
+function buildGREBank(){
+  // QC questions
+  var QC=[
+    {fmt:'qcomp',ctx:'',q:'Column A: 7 × 8\nColumn B: 9 × 6',ch:['A greater','B greater','Equal','Cannot determine'],ans:0,exp:'56 vs 54. A is greater.'},
+    {fmt:'qcomp',ctx:'',q:'Column A: 12 × 9\nColumn B: 11 × 10',ch:['A greater','B greater','Equal','Cannot determine'],ans:1,exp:'108 vs 110. B is greater.'},
+    {fmt:'qcomp',ctx:'',q:'Column A: 6²\nColumn B: 4 × 9',ch:['A greater','B greater','Equal','Cannot determine'],ans:2,exp:'36 = 36. Equal.'},
+    {fmt:'qcomp',ctx:'x > 0',q:'Column A: x²\nColumn B: x³',ch:['A greater','B greater','Equal','Cannot determine'],ans:3,exp:'If x=0.5: 0.25 vs 0.125 (A wins). If x=2: 4 vs 8 (B wins). Cannot determine.'},
+    {fmt:'qcomp',ctx:'',q:'Column A: 25% of 80\nColumn B: 20% of 100',ch:['A greater','B greater','Equal','Cannot determine'],ans:2,exp:'20 vs 20. Equal.'},
+    {fmt:'qcomp',ctx:'',q:'Column A: √49 + √25\nColumn B: √(49+25)',ch:['A greater','B greater','Equal','Cannot determine'],ans:0,exp:'7+5=12 vs √74≈8.6. A is greater. Note: √a+√b ≠ √(a+b)'},
+    {fmt:'qcomp',ctx:'0 < x < 1',q:'Column A: x\nColumn B: x²',ch:['A greater','B greater','Equal','Cannot determine'],ans:0,exp:'For 0<x<1, x²<x. Example: x=0.5: 0.5 vs 0.25. A greater.'},
+    {fmt:'qcomp',ctx:'',q:'Column A: 1/3 of 99\nColumn B: 1/4 of 132',ch:['A greater','B greater','Equal','Cannot determine'],ans:2,exp:'33 vs 33. Equal.'},
+    {fmt:'qcomp',ctx:'n is a positive integer',q:'Column A: Units digit of 3^(4n)\nColumn B: Units digit of 7^(4n)',ch:['A greater','B greater','Equal','Cannot determine'],ans:2,exp:'3 cycles: 3,9,7,1 period 4. 3^(4n) ends in 1. 7 cycles: 7,9,3,1 period 4. 7^(4n) ends in 1. Equal.'},
+    {fmt:'qcomp',ctx:'Triangle with sides 5, 12, and x',q:'Column A: x\nColumn B: 13',ch:['A greater','B greater','Equal','Cannot determine'],ans:3,exp:'If right triangle: x=13. But x could be any value satisfying triangle inequality 7<x<17. Cannot determine.'},
+  ];
+  // 5-choice MC
+  var MC=[
+    {fmt:'mc',ctx:'',q:'What is the units digit of 7^43?',ch:['1','3','7','9','0'],ans:1,exp:'7 cycles: 7,9,3,1 (period 4). 43÷4=10 R3. Position 3 → 3.'},
+    {fmt:'mc',ctx:'',q:'How many trailing zeroes does 25! have?',ch:['4','5','6','7','8'],ans:2,exp:'⌊25/5⌋+⌊25/25⌋ = 5+1 = 6 trailing zeroes.'},
+    {fmt:'mc',ctx:'',q:'Which fraction has a terminating decimal?',ch:['1/3','5/6','7/12','3/8','2/7'],ans:3,exp:'3/8: denominator=2³. Only 2s and 5s → terminates. 3/8=0.375'},
+    {fmt:'mc',ctx:'',q:'A triangle has sides 9, 12, and 15. What type is it?',ch:['Acute','Right','Obtuse','Equilateral','Cannot determine'],ans:1,exp:'9²+12²=81+144=225=15². Pythagorean triple (3,4,5)×3. Right triangle.'},
+    {fmt:'mc',ctx:'',q:'What is 15²?',ch:['205','215','225','235','245'],ans:2,exp:'15²=225. Pattern: n5²=n(n+1) then 25. 1×2=2 → 225.'},
+    {fmt:'mc',ctx:'',q:'35 × 4 = ?',ch:['120','130','140','145','150'],ans:2,exp:'35×4=35×2×2=70×2=140.'},
+    {fmt:'mc',ctx:'',q:'How many times does 5 appear as a factor in 100!?',ch:['20','22','24','25','28'],ans:2,exp:'⌊100/5⌋+⌊100/25⌋+⌊100/125⌋=20+4+0=24.'},
+    {fmt:'mc',ctx:'',q:'The ratio of areas of two similar triangles is 16:25. What is the ratio of their perimeters?',ch:['4:5','16:25','8:10','2:5','256:625'],ans:0,exp:'Area ratio = k². So 16:25 means k=4:5. Perimeter ratio = k = 4:5.'},
+    {fmt:'mc',ctx:'A right triangle has legs 8 and 15.',q:'What is the hypotenuse?',ch:['16','17','18','19','20'],ans:1,exp:'8²+15²=64+225=289=17². Pythagorean triplet (8,15,17).'},
+    {fmt:'mc',ctx:'',q:'72 is what percent of 90?',ch:['75%','78%','80%','82%','85%'],ans:2,exp:'72/90 = 8/10 = 80%.'},
+    {fmt:'mc',ctx:'',q:'What is 12.5% of 64?',ch:['6','7','8','9','10'],ans:2,exp:'12.5%=1/8. 64÷8=8.'},
+    {fmt:'mc',ctx:'n is an integer',q:'Which must be even?',ch:['n²','n+1','2n+1','2n','n²+n+1'],ans:3,exp:'2n is always even regardless of n.'},
+  ];
+  // SATA (Select All That Apply)
+  var SATA=[
+    {fmt:'sata',ctx:'',q:'Which of the following fractions have terminating decimals?\nIndicate all such fractions.',items:['3/8','5/6','7/40','11/30','9/25'],correct:[0,2,4],exp:'3/8: denom=2³ ✓. 7/40: denom=2³×5 ✓. 9/25: denom=5² ✓. Others have factor of 3.'},
+    {fmt:'sata',ctx:'',q:'Which of the following are Pythagorean triples?\nIndicate all that apply.',items:['(3,4,5)','(6,8,11)','(5,12,13)','(7,24,25)','(9,12,16)'],correct:[0,2,3],exp:'(3,4,5): 9+16=25 ✓. (5,12,13): 25+144=169 ✓. (7,24,25): 49+576=625 ✓. Others fail.'},
+    {fmt:'sata',ctx:'0 < x < 1',q:'Which of the following are greater than x?\nIndicate all such expressions.',items:['x²','√x','1/x','x³','x + 0.1'],correct:[1,2,4],exp:'√x > x for 0<x<1. 1/x > 1 > x. x+0.1 > x. But x² < x and x³ < x.'},
+    {fmt:'sata',ctx:'n is a positive integer',q:'Which of the following are always even?\nIndicate all that apply.',items:['n + n','n × 2','n² + n','n² − n','2n + 1'],correct:[0,1,2,3],exp:'n+n=2n ✓. n×2=2n ✓. n²+n=n(n+1): consecutive integers, always even ✓. n²−n=n(n-1): consecutive integers, always even ✓. 2n+1 is always ODD.'},
+    {fmt:'sata',ctx:'',q:'In a city, June rainfall was 5.8 cm, July was 6.5 cm, August was 6.6 cm. Which statements are true?\nIndicate all such statements.',items:['July rainfall > average of all three months','August had the highest rainfall','The rainfall increased each month','The range of rainfall is 0.8 cm'],correct:[1,2,3],exp:'Avg=(5.8+6.5+6.6)/3=18.9/3=6.3. July=6.5>6.3 ✓. Aug=6.6 is highest ✓. 5.8<6.5<6.6 increasing ✓. Range=6.6-5.8=0.8 ✓.'},
+    {fmt:'sata',ctx:'',q:'Which of the following have a units digit of 1?\nIndicate all that apply.',items:['3^20','7^16','11^5','9^5','2^10'],correct:[0,1,4],exp:'3^20: 20÷4=5 R0, use pos 4 →1 ✓. 7^16: 16÷4=4 R0, pos 4 →1 ✓. 11^5 ends in 1^5=1 ✓. 9^5: 5 is odd →9. 2^10=1024 ends in 4.'},
+    {fmt:'sata',ctx:'p and q are consecutive even integers with p < q',q:'Which must be true?\nIndicate all such statements.',items:['q − p = 2','pq is divisible by 8','p + q is divisible by 4','q/p is an integer','p² < q²'],correct:[0,1,2],exp:'Consecutive even: q=p+2. q-p=2 ✓. pq=p(p+2). Since p is even, p=2k: 2k(2k+2)=4k(k+1). k(k+1) is always even (consec integers), so pq=8×something ✓. p+q=2p+2=2(p+1). p even, so p+1 odd, 2(p+1) not div by 4... wait: p=2,q=4: p+q=6 not div 4. p=4,q=6: p+q=10 not div 4. Statement ③ is FALSE. q/p not always integer (p=2,q=4: yes; p=4,q=6: no). p²<q² since p<q and both positive ✓.'},
+  ];
+  // Numeric Entry
+  var NE=[
+    {fmt:'numeric',ctx:'',q:'What is the value of 17 × 18?',ans:306,exp:'17×18 = 17×(20−2) = 340−34 = 306.'},
+    {fmt:'numeric',ctx:'',q:'How many 2s are in the prime factorisation of 16! ?',ans:15,exp:'⌊16/2⌋+⌊16/4⌋+⌊16/8⌋+⌊16/16⌋ = 8+4+2+1 = 15'},
+    {fmt:'numeric',ctx:'',q:'√225 = ?',ans:15,exp:'15²=225. (5,12,13) family: 15²=225.'},
+    {fmt:'numeric',ctx:'',q:'What is 18 × 19? (Use split: 18×20 − 18)',ans:342,exp:'18×20=360. 360−18=342.'},
+    {fmt:'numeric',ctx:'',q:'A triangle has sides in ratio 3:4:5 and a hypotenuse of 20. What is the perimeter?',ans:48,exp:'Scale factor=20/5=4. Sides=12,16,20. Perimeter=48.'},
+    {fmt:'numeric',ctx:'',q:'How many trailing zeroes in 30!?',ans:7,exp:'⌊30/5⌋+⌊30/25⌋=6+1=7'},
+    {fmt:'numeric',ctx:'',q:'25% of 84 = ?',ans:21,exp:'25%=¼. 84÷4=21.'},
+    {fmt:'numeric',ctx:'',q:'Two similar triangles have sides in ratio 3:5. If the smaller has area 27, what is the larger area?',ans:75,exp:'Area ratio=3²:5²=9:25. 27×(25/9)=75.'},
+  ];
+  ALL_GRE=[].concat(QC,MC,SATA,NE);
+}
+
+var sataSel=[];
+var greGoal=10;
+function buildGREQueue(goal){
+  var pool=ALL_GRE.filter(function(q){if(greMode==='all')return true;return q.fmt===greMode;});
+  if(!pool.length)return [];
+  var queue=[];
+  while(queue.length<goal){
+    queue=queue.concat(pool.slice().sort(function(){return Math.random()-0.5}));
+  }
+  return queue.slice(0,goal);
+}
+function startGRE(){
+  gSc=0;gTo=0;
+  gQueue=buildGREQueue(greGoal);
+  document.getElementById('greCountPicker').style.display='none';
+  document.getElementById('greSummary').style.display='none';
+  document.getElementById('greCard').style.display='block';
+  document.getElementById('greStartBtn').style.display='none';
+  document.getElementById('gScore').textContent=0;
+  document.getElementById('gTotal').textContent=0;
+  document.getElementById('gPct').textContent='—';
+  document.getElementById('gLeft').textContent=gQueue.length;
+  document.getElementById('gProgress').style.width='0%';
+  nextGRE();
+}
+function recordGRE(ok){
+  gTo++;if(ok)gSc++;
+  OST.gre.totalQ++;if(ok)OST.gre.totalOk++;
+  OST.gre.history.push({ok:ok,fmt:curQ.fmt,ts:Date.now()});
+  if(OST.gre.history.length>500)OST.gre.history=OST.gre.history.slice(-500);
+  saveOST();
+}
+function finishGRE(){
+  var acc=gTo>0?Math.round(gSc/gTo*100):0;
+  document.getElementById('greCard').style.display='none';
+  document.getElementById('greSumScore').textContent=gSc+'/'+gTo;
+  document.getElementById('greSumDetail').textContent=acc+'% accuracy';
+  document.getElementById('greSummary').style.display='block';
+}
+function restartGRE(){
+  document.getElementById('greSummary').style.display='none';
+  document.getElementById('greCard').style.display='block';
+  document.getElementById('greCountPicker').style.display='block';
+  document.getElementById('greStartBtn').style.display='block';
+}
+function nextGRE(){
+  document.getElementById('gNext').style.display='none';
+  document.getElementById('gExplain').className='explain-box';
+  document.getElementById('gFb').textContent='';document.getElementById('gFb').className='fbk';
+  sataSel=[];
+  if(!gQueue.length){finishGRE();return;}
+  curQ=gQueue.shift();
+  document.getElementById('gLeft').textContent=gQueue.length;
+  var fmtLabels={qcomp:'Quantitative Comparison',mc:'5-Choice MC',sata:'Select All That Apply',numeric:'Numeric Entry'};
+  var fmtClasses={qcomp:'qt-num',mc:'qt-pct',sata:'qt-sata',numeric:'qt-div'};
+  document.getElementById('gFmtTag').innerHTML='<span class="qtype-tag '+(fmtClasses[curQ.fmt]||'qt-num')+'">'+(fmtLabels[curQ.fmt]||curQ.fmt)+'</span>';
+  document.getElementById('gCtx').textContent=curQ.ctx||'';
+  document.getElementById('gQ').innerHTML=curQ.q.replace(/\n/g,'<br>');
+  var aa=document.getElementById('gAnswerArea');aa.innerHTML='';
+
+  if(curQ.fmt==='qcomp'||curQ.fmt==='mc'){
+    var div=document.createElement('div');div.className='choices';
+    curQ.ch.forEach(function(ch,i){
+      var b=document.createElement('button');b.className='choice';b.textContent=ch;
+      b.onclick=function(){
+        var ok=i===curQ.ans;
+        recordGRE(ok);
+        if(ok)b.classList.add('right');else{b.classList.add('wrong');div.querySelectorAll('.choice')[curQ.ans].classList.add('right');}
+        div.querySelectorAll('.choice').forEach(function(btn){btn.disabled=true});
+        showGFb(ok);updG();
+        document.getElementById('gNext').style.display='inline-block';
+      };
+      div.appendChild(b);
+    });
+    aa.appendChild(div);
+  } else if(curQ.fmt==='sata'){
+    var sbox=document.createElement('div');sbox.className='sata-box';
+    curQ.items.forEach(function(item,i){
+      var row=document.createElement('div');row.className='sata-item';
+      var cb=document.createElement('div');cb.className='sata-cb';cb.id='sata-cb-'+i;
+      var txt=document.createElement('div');txt.className='sata-text';txt.textContent=item;
+      row.appendChild(cb);row.appendChild(txt);
+      row.onclick=function(){
+        var idx=sataSel.indexOf(i);
+        if(idx>=0){sataSel.splice(idx,1);row.classList.remove('selected');cb.textContent='';}
+        else{sataSel.push(i);row.classList.add('selected');cb.textContent='✓';}
+      };
+      sbox.appendChild(row);
+    });
+    var sub=document.createElement('button');sub.className='sata-submit';sub.textContent='Submit Answer';
+    sub.onclick=function(){
+      sub.disabled=true;
+      var correct=curQ.correct;
+      var ok=sataSel.length===correct.length&&sataSel.every(function(v){return correct.indexOf(v)>=0});
+      recordGRE(ok);
+      sbox.querySelectorAll('.sata-item').forEach(function(row,i){
+        var inSel=sataSel.indexOf(i)>=0;
+        var inAns=correct.indexOf(i)>=0;
+        row.onclick=null;
+        if(inAns&&inSel) row.className='sata-item right';
+        else if(!inAns&&inSel) row.className='sata-item wrong';
+        else if(inAns&&!inSel) row.className='sata-item missed';
+      });
+      showGFb(ok);updG();
+      document.getElementById('gNext').style.display='inline-block';
+    };
+    aa.appendChild(sbox);aa.appendChild(sub);
+  } else if(curQ.fmt==='numeric'){
+    var row=document.createElement('div');row.className='ans-row';
+    var inp=document.createElement('input');inp.className='ans-inp';inp.type='number';inp.inputMode='numeric';inp.placeholder='?';
+    var btn=document.createElement('button');btn.className='chk-btn';btn.textContent='Submit';
+    btn.onclick=function(){
+      var v=parseFloat(inp.value);if(isNaN(v)) return;
+      inp.disabled=true;btn.disabled=true;
+      var ok=Math.abs(v-curQ.ans)<0.6;
+      recordGRE(ok);
+      showGFb(ok);updG();
+      document.getElementById('gNext').style.display='inline-block';
+    };
+    inp.onkeydown=function(e){if(e.key==='Enter')btn.click();};
+    row.appendChild(inp);row.appendChild(btn);
+    aa.appendChild(row);
+    setTimeout(function(){inp.focus();},80);
+  }
+}
+function showGFb(ok){
+  var fb=document.getElementById('gFb');
+  fb.textContent=ok?'Correct!':'Incorrect.';fb.className='fbk '+(ok?'ok':'no');
+  var eb=document.getElementById('gExplain');eb.innerHTML=curQ.exp;eb.className='explain-box show';
+}
+function updG(){
+  document.getElementById('gScore').textContent=gSc;
+  document.getElementById('gTotal').textContent=gTo;
+  document.getElementById('gPct').textContent=gTo>0?Math.round(gSc/gTo*100)+'%':'—';
+  document.getElementById('gProgress').style.width=Math.min(gTo*2,100)+'%';
+}
+
+// =============================================
+// INIT
+// =============================================
+buildPickers('tablePickers',tActive,buildTimesTable);
+buildPickers('drillPickers',dActive,null);
+buildTimesTable();
+buildSquares();
+buildRoots();
+buildCubesTable();
+buildPowers10();
+buildDivisib();
+buildPctTable();
+buildUnitDigits();
+buildIntegers();
+buildDecimals();
+buildZeroes();
+buildFactorial();
+buildRealNums();
+buildPythagorean();
+buildSimTri();
+buildShortcuts();
+buildDrillPool();
+buildGREBank();
+renderFacts();
+
+// =============================================
+// PWA — install prompt + service worker
+// =============================================
+var deferredInstall=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredInstall=e;
+  document.getElementById('installBar').style.display='flex';
+});
+function doInstall(){
+  document.getElementById('installBar').style.display='none';
+  if(deferredInstall){deferredInstall.prompt();deferredInstall=null;}
+}
+window.addEventListener('appinstalled',function(){document.getElementById('installBar').style.display='none';});
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});
+}
+</script>
+</body>
+</html>
